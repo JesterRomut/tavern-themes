@@ -1,46 +1,238 @@
-@use "icons-fa.scss";
-
 $bg-color: #e0e0e0 !default;
-$shadow-color: #bebebe !default;
+$shadow-color: #000 !default;
+$mixed-shadow-color: color-mix(in srgb, $shadow-color, transparent 75%);
 $glow-color: #ffffff !default;
 
-@mixin newmorph-common {
-  // border-radius: 50px;
-  // background: #e0e0e0;
+/* ---字体加载--- */
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.0/index.css");
+@import url("https://cdn.jsdelivr.net/npm/@lobehub/webfont-harmony-sans-sc@1.0.0/css/index-full.css");
+@import url("https://cdn.jsdelivr.net/npm/cn-fontsource-source-han-sans-sc-vf/font.css");
+/* ---字体变量--- */
+:root {
+  --font-sans: "HarmonyOS Sans SC", system-ui, sans-serif;
+  --font-serif: "HarmonyOS Sans SC", system-ui, sans-serif;
+  --font-mono:
+    "JetBrains Mono", "Cascadia Code", ui-monospace, Menlo, Consolas,
+    "Source Han Sans SC VF", monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+input,
+textarea,
+select,
+option,
+button:not(.fa-solid):not(.fa-regular):not([class*="fa-"]),
+.select2-container,
+.select2-container .select2-selection,
+.text_pole,
+.widthNatural,
+#send_textarea,
+#dialogue_del_mes {
+  font-family: var(--font-sans) !important;
+}
+
+.mes_text,
+.mes_text p,
+.mes_text span,
+.ch_name,
+.mesIDDisplay,
+.mes_timer,
+.tokenCounterDisplay {
+  font-family: var(--font-sans);
+}
+
+code,
+pre,
+.hljs,
+.katex,
+.mes_text code,
+.mes_text pre,
+.mes_text .hljs,
+.mes_text .hljs span,
+pre code,
+pre code.hljs {
+  font-family: var(--font-mono) !important;
+}
+
+%newmorph-common {
   box-shadow:
-    2px 2px 6px $shadow-color,
+    2px 2px 6px $mixed-shadow-color,
     -2px -2px 6px $glow-color;
 }
 
+%newmorph-inset {
+  box-shadow:
+    inset 2px 2px 6px $mixed-shadow-color,
+    inset -2px -2px 6px $glow-color;
+}
+
+%outline-nogap {
+  outline: solid 2px $bg-color;
+}
+
+%interactable-wrapper {
+  .interactable {
+    opacity: 1;
+  }
+  .interactable:hover {
+    opacity: 1;
+  }
+}
+
+%rounded-md {
+  border-radius: 10px;
+}
+
 #top-settings-holder {
+  @extend %outline-nogap;
   gap: 10px;
   padding: 10px;
   background-color: $bg-color;
+  @extend %interactable-wrapper;
 }
 .drawer {
-  @include newmorph-common();
-  border-radius: 10px;
+  @extend %newmorph-common;
+  @extend %rounded-md;
   width: 100%;
   aspect-ratio: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.drawer:hover {
-  background: linear-gradient(145deg, #cacaca, #f0f0f0);
-  @include newmorph-common();
+
+  & .drawer-icon {
+    font-size: 1.6rem;
+    box-sizing: content-box;
+  }
+
+  &:not(:has(.openIcon)) {
+    &:hover {
+      background: linear-gradient(145deg, #cacaca, #f0f0f0);
+      @extend %newmorph-common;
+    }
+
+    &:hover .drawer-icon {
+      opacity: 1;
+    }
+  }
+
+  &:has(.openIcon) {
+    @extend %newmorph-inset;
+
+    .drawer-icon {
+      filter: brightness(50);
+    }
+  }
 }
 
-.drawer:hover .drawer-icon {
-  opacity: 1;
+#chat {
+  @extend %rounded-md;
+  @extend %newmorph-inset;
+  outline: solid 4px $bg-color;
+}
+#extensionTopBar {
+  border-radius: 0 !important;
+  @extend %interactable-wrapper;
 }
 
-drawer-icon {
-  width: 100%;
-  height: 100%;
+#send_form {
+  border-radius: 0;
+  @extend %outline-nogap;
 }
 
-.drawer-icon {
-  font-size: 20px;
-  box-sizing: content-box;
+.mes_buttons {
+  margin: 10px;
+  @extend %rounded-md;
+  @extend %newmorph-common;
+  @extend %interactable-wrapper;
+  .mes_button {
+    &:hover {
+      @extend %newmorph-inset;
+    }
+    border-radius: 50px;
+    filter: none;
+  }
+}
+.mes_text {
+  p:has(q),
+  h1,
+  h2,
+  h3,
+  blockquote {
+    @extend %rounded-md;
+    @extend %newmorph-common;
+    padding: 0.2rem 0.4rem;
+  }
+  p:has(q) {
+    margin: 0.8rem 0.3rem;
+  }
+  blockquote {
+    @extend %rounded-md;
+    background-color: transparent;
+    @extend %newmorph-inset;
+  }
+}
+
+body.big-avatars .avatar img {
+  @extend %newmorph-common;
+  border: none;
+}
+
+#leftSendForm,
+#rightSendForm {
+  @extend %rounded-md;
+  @extend %newmorph-common;
+  @extend %interactable-wrapper;
+  .interactable:hover {
+    @extend %newmorph-inset;
+  }
+}
+
+.qr--buttons {
+  @extend %interactable-wrapper;
+  .qr--button {
+    @extend %newmorph-common;
+  }
+  .qr--button:hover {
+    background: transparent;
+
+    @extend %newmorph-inset;
+  }
+}
+
+.drawer-content {
+  .text_pole,
+  select,
+  textarea,
+  .neo-range-input,
+  .select2-container .select2-selection--multiple,
+  .select2-container .select2-selection--single {
+    background-color: transparent;
+    @extend %newmorph-inset;
+  } //做掉深色背景
+}
+
+input[type="checkbox"] {
+  background: none;
+  @extend %newmorph-common;
+}
+
+.select2-container .select2-selection--multiple .select2-selection__choice,
+.select2-container .select2-selection--single .select2-selection__choice {
+  background-color: transparent;
+  @extend %newmorph-common;
+  button,
+  span {
+    background-color: transparent;
+  }
+}
+
+#extensions_settings .inline-drawer-toggle.inline-drawer-header,
+#extensions_settings2 .inline-drawer-toggle.inline-drawer-header,
+#user-settings-block h4,
+.standoutHeader {
+  @extend %newmorph-common;
+  background: none;
 }

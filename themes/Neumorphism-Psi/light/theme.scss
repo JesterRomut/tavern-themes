@@ -1,4 +1,7 @@
 @use "../theme.scss" with (
   $bg-color: #e0e0e0
 );
+@use "icons-fa.scss" with (
+  $icon-color: "666666"
+);
 @use "../layout.scss";

@@ -76,7 +76,7 @@ function buildTheme(manifestPath) {
       compiledCss = fs.readFileSync(cssPath, "utf-8").trim();
     } else {
       console.warn(
-        `⚠️ [${relativeDir}] 未找到 theme.scss 或 theme.css，使用现有 custom_css`,
+        `[WARN] [${relativeDir}] 未找到 theme.scss 或 theme.css，使用现有 custom_css`,
       );
       compiledCss = manifest.custom_css || "";
     }
@@ -88,25 +88,38 @@ function buildTheme(manifestPath) {
     fs.mkdirSync(outDir, { recursive: true });
 
     // 5. 决定输出文件名（优先使用 manifest.name，回退到目录名）
-    const outputFileName =
-      (manifest.name ? manifest.name : path.basename(themeDir)) + ".json";
-    const outputPath = path.join(outDir, outputFileName);
+    const baseName = manifest.name ? manifest.name : path.basename(themeDir);
+    const jsonFileName = baseName + ".json";
+    const cssFileName = baseName + ".css";
+    const jsonOutputPath = path.join(outDir, jsonFileName);
+    const cssOutputPath = path.join(outDir, cssFileName);
 
-    // 6. 写入最终的 JSON 主题文件
+    // 6. 写入最终的 JSON 主题文件与 CSS 文件
     fs.writeFileSync(
-      outputPath,
+      jsonOutputPath,
       JSON.stringify(manifest, null, 2) + "\n",
       "utf-8",
     );
+    fs.writeFileSync(
+      cssOutputPath,
+      compiledCss ? compiledCss + "\n" : "",
+      "utf-8",
+    );
 
-    const stats = fs.statSync(outputPath);
-    const sizeKb = (stats.size / 1024).toFixed(2);
-    const relativeOut = path.relative(process.cwd(), outputPath);
+    const jsonStats = fs.statSync(jsonOutputPath);
+    const jsonSizeKb = (jsonStats.size / 1024).toFixed(2);
+    const relativeJsonOut = path.relative(process.cwd(), jsonOutputPath);
 
-    console.log(`✔ [OK] ${relativeDir} -> ${relativeOut} (${sizeKb} KB)`);
+    const cssStats = fs.statSync(cssOutputPath);
+    const cssSizeKb = (cssStats.size / 1024).toFixed(2);
+    const relativeCssOut = path.relative(process.cwd(), cssOutputPath);
+
+    console.log(
+      `[OK] ${relativeDir} -> ${relativeJsonOut} (${jsonSizeKb} KB), ${relativeCssOut} (${cssSizeKb} KB)`,
+    );
     return true;
   } catch (error) {
-    console.error(`✖ [FAIL] ${relativeDir}:`);
+    console.error(`[FAIL] ${relativeDir}:`);
     if (error.sassMessage) {
       console.error(`  ${error.sassMessage}`);
       if (error.span) {
@@ -126,7 +139,7 @@ function buildTheme(manifestPath) {
  */
 function runBuild() {
   console.log(
-    `\n📦 开始构建主题 (输出目录: ${path.relative(process.cwd(), outDir) || "."}) ...`,
+    `\n开始构建主题 (输出目录: ${path.relative(process.cwd(), outDir) || "."}) ...`,
   );
   const startTime = Date.now();
 
@@ -149,7 +162,7 @@ function runBuild() {
   }
 
   if (manifestFiles.length === 0) {
-    console.warn(`❗ 未找到任何 theme.manifest.json 文件`);
+    console.warn(`[WARN] 未找到任何 theme.manifest.json 文件`);
     return true;
   }
 
@@ -164,7 +177,7 @@ function runBuild() {
 
   const duration = ((Date.now() - startTime) / 1000).toFixed(2);
   console.log(
-    `✨ 完成! 成功: ${successCount}，失败: ${failCount} (耗时: ${duration}s)\n`,
+    `完成! 成功: ${successCount}，失败: ${failCount} (耗时: ${duration}s)\n`,
   );
 
   return failCount === 0;
@@ -173,7 +186,7 @@ function runBuild() {
 // 主入口
 if (isWatch) {
   runBuild();
-  console.log(`👀 正在监听 themes/ 目录变更... (Ctrl+C 退出)`);
+  console.log(`正在监听 themes/ 目录变更... (Ctrl+C 退出)`);
 
   let debounceTimer = null;
   fs.watch(THEMES_ROOT, { recursive: true }, (eventType, filename) => {
@@ -182,7 +195,7 @@ if (isWatch) {
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-      console.log(`\n🔄 检测到文件变更: ${filename}，正在重新构建...`);
+      console.log(`\n检测到文件变更: ${filename}，正在重新构建...`);
       runBuild();
     }, 150);
   });

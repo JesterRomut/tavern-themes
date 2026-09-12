@@ -35,7 +35,7 @@ $top-settings-padding: 1rem !default;
 
   #top-settings-holder {
     padding-top: $top-settings-padding;
-    gap: $top-settings-padding;
+    // gap: $top-settings-padding;
   }
 
   .drawer-content {
@@ -43,9 +43,9 @@ $top-settings-padding: 1rem !default;
     width: calc(100vw - $top-settings-width);
     width: calc(100dvw - $top-settings-width);
   }
-  .expression-holder {
-    z-index: 114;
-    bottom: var(--formSheldHeight);
-    left: var(--nav-bar-width);
-  }
+}
+div .expression-holder {
+  z-index: 114;
+  bottom: var(--formSheldHeight);
+  left: var(--nav-bar-width);
 }
