@@ -1,0 +1,9 @@
+@use "../theme.scss" with (
+  //#e0e0e0
+  $shadow-color: #000,
+  $glow-color: color-mix(in srgb, #fff, transparent 75%)
+);
+@use "icons-fa.scss" with (
+  $icon-color: "eeeeee"
+);
+@use "../layout.scss";

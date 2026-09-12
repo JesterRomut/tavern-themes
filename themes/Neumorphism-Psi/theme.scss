@@ -1,6 +1,6 @@
-$bg-color: #e0e0e0 !default;
+$bg-color: var(--SmartThemeChatTintColor) !default; //#e0e0e0
 $shadow-color: #000 !default;
-$mixed-shadow-color: color-mix(in srgb, $shadow-color, transparent 75%);
+$shadow-color-75: color-mix(in srgb, #000, transparent 75%) !default;
 $glow-color: #ffffff !default;
 
 /* ---字体加载--- */
@@ -59,13 +59,13 @@ pre code.hljs {
 
 %newmorph-common {
   box-shadow:
-    2px 2px 6px $mixed-shadow-color,
+    2px 2px 6px $shadow-color-75,
     -2px -2px 6px $glow-color;
 }
 
 %newmorph-inset {
   box-shadow:
-    inset 2px 2px 6px $mixed-shadow-color,
+    inset 2px 2px 6px $shadow-color-75,
     inset -2px -2px 6px $glow-color;
 }
 
@@ -109,7 +109,11 @@ pre code.hljs {
 
   &:not(:has(.openIcon)) {
     &:hover {
-      background: linear-gradient(145deg, #cacaca, #f0f0f0);
+      background: linear-gradient(
+        145deg,
+        color-mix(in srgb, $shadow-color, transparent 79%),
+        color-mix(in srgb, $glow-color, transparent)
+      ); //#cacaca, #f0f0f0
       @extend %newmorph-common;
     }
 
@@ -189,14 +193,13 @@ body.big-avatars .avatar img {
     @extend %newmorph-inset;
   }
 }
-
 .qr--buttons {
   @extend %interactable-wrapper;
   .qr--button {
     @extend %newmorph-common;
   }
   .qr--button:hover {
-    background: transparent;
+    background: transparent !important;
 
     @extend %newmorph-inset;
   }
