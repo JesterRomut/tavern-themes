@@ -1,6 +1,46 @@
-a::after {
-  content: "Hello World";
+@use "icons-fa.scss";
+
+$bg-color: #e0e0e0 !default;
+$shadow-color: #bebebe !default;
+$glow-color: #ffffff !default;
+
+@mixin newmorph-common {
+  // border-radius: 50px;
+  // background: #e0e0e0;
+  box-shadow:
+    2px 2px 6px $shadow-color,
+    -2px -2px 6px $glow-color;
 }
-a {
-  color: $primary-color;
+
+#top-settings-holder {
+  gap: 10px;
+  padding: 10px;
+  background-color: $bg-color;
+}
+.drawer {
+  @include newmorph-common();
+  border-radius: 10px;
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.drawer:hover {
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  @include newmorph-common();
+}
+
+.drawer:hover .drawer-icon {
+  opacity: 1;
+}
+
+drawer-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.drawer-icon {
+  font-size: 20px;
+  box-sizing: content-box;
 }

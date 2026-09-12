@@ -1,0 +1,51 @@
+$top-settings-width: 4rem !default;
+$top-settings-padding: 1rem !default;
+@media screen and (min-width: 1000px) {
+  body {
+    display: flex;
+  }
+  #top-bar {
+    border-bottom: unset;
+    margin: unset;
+    width: unset;
+    height: unset;
+    position: unset;
+  }
+
+  #sheld {
+    left: $top-settings-width;
+    justify-content: left;
+    margin: unset;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: unset;
+    top: 0;
+    width: calc(100vw - $top-settings-width);
+    width: calc(100dvw - $top-settings-width);
+  }
+  #top-settings-holder {
+    margin: unset;
+    position: unset;
+    height: 100vh;
+    height: 100dvh;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: $top-settings-width;
+  }
+
+  #top-settings-holder {
+    padding-top: $top-settings-padding;
+    gap: $top-settings-padding;
+  }
+
+  .drawer-content {
+    left: $top-settings-width;
+    width: calc(100vw - $top-settings-width);
+    width: calc(100dvw - $top-settings-width);
+  }
+  .expression-holder {
+    z-index: 114;
+    bottom: var(--formSheldHeight);
+    left: var(--nav-bar-width);
+  }
+}
