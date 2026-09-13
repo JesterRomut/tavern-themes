@@ -2,7 +2,8 @@
 二改, 原仓库：https://github.com/KronosXup/sillytavern-gruvbox-harmony
 */
 $icon-color: "%233c3836" !default;
-$icon-offline: "%23aa0000" !default;
+$icon-offline: "%23bf2734" !default;
+$bg-color: "transparent" !default;
 
 %fa-replaced {
   background-size: contain !important;
@@ -53,6 +54,11 @@ $icon-offline: "%23aa0000" !default;
 .fa-plug::before {
   @extend %fa-replaced;
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'><path fill='#{$icon-color}' d='M237.66 66.34a8 8 0 0 0-11.32 0L192 100.69L155.31 64l34.35-34.34a8 8 0 1 0-11.32-11.32L144 52.69l-26.34-26.35a8 8 0 0 0-11.32 11.32l6.35 6.34l-53 53a40 40 0 0 0 0 56.57l15.71 15.71l-49.06 49.06a8 8 0 0 0 11.32 11.32l49.09-49.09l15.71 15.71a40 40 0 0 0 56.57 0l53-53l6.34 6.35a8 8 0 0 0 11.32-11.32L203.31 112l34.35-34.34a8 8 0 0 0 0-11.32M147.72 185a24 24 0 0 1-33.95 0L71 142.23a24 24 0 0 1 0-33.95l53-53L200.69 132Z'/></svg>") !important;
+}
+
+.fa-plug-circle-exclamation::before {
+  @extend %fa-replaced;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'>%0A<path fill='#{$icon-offline}' d='M237.66 77.66L203.31 112l26.35 26.34a8 8 0 0 1-11.32 11.32l-6.34-6.35l-53 53a40 40 0 0 1-56.57 0l-15.68-15.74l-49.09 49.09a8 8 0 0 1-11.32-11.32l49.09-49.09l-15.71-15.71a40 40 0 0 1 0-56.57l53-53l-6.35-6.34a8 8 0 0 1 11.32-11.32L144 52.69l34.34-34.35a8 8 0 1 1 11.32 11.32L155.31 64L192 100.69l34.34-34.35a8 8 0 0 1 11.32 11.32'/>%0A<circle cx='195' cy='195' r='40' fill='#{$bg-color}' stroke='#{$icon-offline}' stroke-width='4'/>%0A<rect x='191' y='175' width='8' height='26' rx='4' fill='#{$icon-offline}'/>%0A<circle cx='195' cy='209' r='4' fill='#{$icon-offline}'/>%0A</svg>") !important;
 }
 
 .fa-address-card::before {

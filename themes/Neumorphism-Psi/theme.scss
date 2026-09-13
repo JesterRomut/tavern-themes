@@ -1,17 +1,23 @@
+/*
+@Kernschmelze
+禁止倒卖
+*/
+
 $bg-color: color(
   from var(--SmartThemeChatTintColor) srgb r g b / 1
 ) !default; //#e0e0e0
 $shadow-color: #000 !default;
 $shadow-color-75: color-mix(in srgb, #000, transparent 75%) !default;
 $glow-color: #ffffff !default;
-$danger-color: #df2c3b !default;
+$danger-color: #bf2734 !default;
 $mobile-threshold: 1000px !default;
 
-/* ---字体加载--- */
+$highlight-color: color-mix(in srgb, #fff, $bg-color 50%);
+
 @import url("https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.0/index.css");
 @import url("https://cdn.jsdelivr.net/npm/@lobehub/webfont-harmony-sans-sc@1.0.0/css/index-full.css");
 @import url("https://cdn.jsdelivr.net/npm/cn-fontsource-source-han-sans-sc-vf/font.css");
-/* ---字体变量--- */
+
 :root {
   --font-sans: "HarmonyOS Sans SC", system-ui, sans-serif;
   --font-serif: "HarmonyOS Sans SC", system-ui, sans-serif;
@@ -30,6 +36,9 @@ body {
   ::-webkit-scrollbar-track {
     @extend %bg-none;
     overflow: visible;
+    &:hover {
+      background: color-mix(in srgb, $shadow-color, transparent 75%) !important;
+    }
   }
   ::-webkit-scrollbar-thumb {
     background: color-mix(in srgb, $glow-color, $bg-color 50%) !important;
@@ -41,46 +50,8 @@ body {
     overflow: visible;
   }
   ::-webkit-scrollbar-thumb:hover {
-    // background: #555;
     @extend %newmorph-inset-sm;
   }
-}
-
-input,
-textarea,
-select,
-option,
-button:not(.fa-solid):not(.fa-regular):not([class*="fa-"]),
-.select2-container,
-.select2-container .select2-selection,
-.text_pole,
-.widthNatural,
-#send_textarea,
-#dialogue_del_mes {
-  font-family: var(--font-sans) !important;
-}
-
-.mes_text,
-.mes_text p,
-.mes_text span,
-.ch_name,
-.mesIDDisplay,
-.mes_timer,
-.tokenCounterDisplay {
-  font-family: var(--font-sans);
-}
-
-code,
-pre,
-.hljs,
-.katex,
-.mes_text code,
-.mes_text pre,
-.mes_text .hljs,
-.mes_text .hljs span,
-pre code,
-pre code.hljs {
-  font-family: var(--font-mono) !important;
 }
 
 %newmorph-outset-md {
@@ -141,10 +112,62 @@ pre code.hljs {
   background-color: transparent !important;
   background: none !important;
 }
+
+input,
+textarea,
+select,
+button:not(.fa-solid):not(.fa-regular):not([class*="fa-"]),
+.select2-container,
+.select2-container .select2-selection,
+.text_pole,
+.widthNatural,
+#send_textarea,
+#dialogue_del_mes {
+  font-family: var(--font-sans) !important;
+}
+
+.mes_text,
+.mes_text p,
+.mes_text span,
+.ch_name,
+.mesIDDisplay,
+.mes_timer,
+.tokenCounterDisplay {
+  font-family: var(--font-sans);
+}
+
+code,
+pre,
+.hljs,
+.katex,
+.mes_text code,
+.mes_text pre,
+.mes_text .hljs,
+.mes_text .hljs span,
+pre code,
+pre code.hljs {
+  font-family: var(--font-mono) !important;
+}
+#top-bar {
+  box-shadow: none;
+}
 #top-settings-holder {
   @extend %outline-nogap;
   background-color: $bg-color;
   @extend %interactable-wrapper;
+  @media screen and (max-width: $mobile-threshold) {
+    background: linear-gradient(
+      145deg,
+      $glow-color,
+      transparent 25%,
+      transparent 85%,
+      $shadow-color-75
+    );
+    outline: none;
+    box-shadow:
+      2px 2px 6px $shadow-color-75,
+      -2px -2px 6px $glow-color;
+  }
 }
 .drawer {
   @extend %newmorph-outset-md;
@@ -183,20 +206,27 @@ pre code.hljs {
   }
 
   .drawer-content {
-    .text_pole,
-    select,
-    textarea,
-    .neo-range-input,
-    .select2-container .select2-selection--multiple,
-    .select2-container .select2-selection--single {
-      @extend %bg-none;
-      @extend %newmorph-inset-sm;
-    } //做掉深色背景
-    * {
-      @extend %bg-none;
-    }
+    // * {
+    //   @extend %bg-none;
+    // }
     @extend %newmorph-outset-md;
   }
+}
+
+.text_pole,
+select,
+textarea,
+.neo-range-input,
+.select2-container .select2-selection--multiple,
+.select2-container .select2-selection--single {
+  @extend %bg-none;
+  @extend %newmorph-inset-sm;
+} //做掉深色背景
+
+.reasoning_edit_textarea,
+.edit_textarea {
+  @extend %bg-none;
+  @extend %newmorph-inset-md;
 }
 
 #chat {
@@ -226,6 +256,17 @@ pre code.hljs {
     }
     border-radius: 50px;
     filter: none;
+  }
+}
+
+.mes_edit_buttons {
+  filter: none;
+  @extend %interactable-wrapper;
+  .menu_button[disabled],
+  .menu_button.disabled {
+    @extend %bg-none;
+    filter: none;
+    box-shadow: none;
   }
 }
 
@@ -261,9 +302,27 @@ pre code.hljs {
   }
 }
 
+hr {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    $shadow-color-75 50%,
+    $glow-color 51%,
+    transparent 100%
+  );
+  height: 1em;
+}
+
 body.big-avatars .avatar img {
   @extend %newmorph-outset-md;
   border: none;
+}
+
+div .expression-holder,
+.zoomed_avatar {
+  .dragClose {
+    filter: none;
+  }
 }
 
 #leftSendForm,
@@ -287,6 +346,10 @@ body.big-avatars .avatar img {
 }
 
 input[type="checkbox"] {
+  &::before {
+    box-shadow: inset 1em 1em
+      color-mix(in srgb, var(--SmartThemeBodyColor), transparent 20%); //$highlight-color;
+  }
   &:not(:disabled) {
     @extend %newmorph-outset-sm;
   }
@@ -324,23 +387,30 @@ input[type="checkbox"] {
   }
 }
 
-.neo-range-slider {
+// ::picker(select),
+// select option {
+//   color: red;
+//   background: $bg-color;
+// }
+
+.neo-range-slider,
+input[type="range"] {
   border: none;
   // @extend %newmorph-inset-bg-md;
-  background: color-mix(in srgb, $glow-color, transparent 50%) !important;
+  background: $highlight-color !important;
   box-shadow: none !important;
   @extend %newmorph-outset-sm;
   filter: none !important;
 
-  &:not(:disabled):hover {
-    &::-webkit-slider-thumb {
-      @extend %newmorph-inset-md;
-    }
-  }
+  // &:not(:disabled):hover {
+  //   &::-webkit-slider-thumb {
+  //     @extend %newmorph-inset-md;
+  //   }
+  // }
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    background: $glow-color !important;
+    background: $highlight-color !important;
     border: 1px solid $bg-color !important;
     // box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
@@ -350,7 +420,7 @@ input[type="checkbox"] {
   }
 
   &:disabled::-webkit-slider-thumb {
-    background: color-mix(in srgb, $glow-color, $bg-color 50%) !important;
+    background: $highlight-color !important;
   }
 
   &:disabled + .neo-range-input {
@@ -368,6 +438,9 @@ input[type="checkbox"] {
 
   .menu_button:not(.disabled):not([disabled]) {
     @extend %newmorph-outset-sm;
+    &:hover {
+      @extend %newmorph-inset-sm;
+    }
   }
 }
 
@@ -382,6 +455,7 @@ input[type="checkbox"] {
     // }
   }
   @extend %bg-none;
+  filter: none;
 }
 
 .rm_tag_controls {
@@ -425,6 +499,7 @@ input[type="checkbox"] {
     li.completion_prompt_manager_prompt:not(
         .completion_prompt_manager_prompt_disabled
       ) {
+      @extend %rounded-md;
       @extend %newmorph-outset-sm;
     }
   }
@@ -441,11 +516,16 @@ input[type="checkbox"] {
   color: $bg-color !important;
 
   &:hover {
-    border: 1px solid color-mix(in srgb, $glow-color, $bg-color 50%);
+    border: 1px solid $bg-color;
+    background-color: $danger-color !important;
   }
   &::before {
     filter: brightness(2);
   }
+}
+
+.redOverlayGlow {
+  opacity: 1 !important;
 }
 
 .thumbnail-clipper {
@@ -479,4 +559,14 @@ input[type="checkbox"] {
   li:not(.disabled):hover {
     @extend %newmorph-inset-md;
   }
+}
+
+#character_popup {
+  @extend %rounded-md;
+  @extend %newmorph-outset-md;
+}
+#options,
+#extensionsMenu,
+.popup .popper-modal {
+  @extend %newmorph-outset-md;
 }

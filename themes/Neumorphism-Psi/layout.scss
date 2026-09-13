@@ -37,9 +37,14 @@ $mobile-threshold: 1000px !default;
   }
 
   .drawer-content {
+    top: 0;
     left: $top-settings-width;
     width: calc(100vw - $top-settings-width);
     width: calc(100dvw - $top-settings-width);
+  }
+
+  #chat {
+    max-height: calc(100vh - var(--bottomFormBlockSize));
   }
 }
 div .expression-holder,
