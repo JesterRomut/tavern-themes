@@ -1,6 +1,8 @@
 $top-settings-width: 4rem !default;
 $top-settings-padding: 0.625rem !default;
 $mobile-threshold: 1000px !default;
+
+$sheld-width-offset: calc($top-settings-width - 2px);
 @media screen and (min-width: $mobile-threshold) {
   body {
     display: flex;
@@ -14,15 +16,15 @@ $mobile-threshold: 1000px !default;
   }
 
   #sheld {
-    left: $top-settings-width;
+    left: $sheld-width-offset;
     justify-content: left;
     margin: unset;
     min-height: 100vh;
     min-height: 100dvh;
     max-height: unset;
     top: 0;
-    width: calc(100vw - $top-settings-width);
-    width: calc(100dvw - $top-settings-width);
+    width: calc(100vw - $sheld-width-offset);
+    width: calc(100dvw - $sheld-width-offset);
   }
   #top-settings-holder {
     margin: unset;
@@ -52,4 +54,5 @@ div .expression-holder,
   z-index: 114;
   // bottom: var(--formSheldHeight);
   left: $top-settings-width;
+  bottom: var(--bottomFormBlockSize);
 }

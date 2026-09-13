@@ -1,5 +1,6 @@
 /*
 @Kernschmelze
+图标修改@Gruvbox
 禁止倒卖
 */
 
@@ -86,9 +87,19 @@ body {
   ); //#cacaca, #f0f0f0
 }
 
-%outline-nogap {
-  outline: solid 2px $bg-color;
+%newmorph-inset-bg-fixed {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, $shadow-color, transparent 79%),
+    transparent 100px,
+    transparent 100px,
+    color-mix(in srgb, $glow-color, transparent)
+  ); //#cacaca, #f0f0f0
 }
+
+// %outline-nogap {
+//   outline: solid 2px $bg-color;
+// }
 
 %interactable-wrapper {
   .interactable {
@@ -152,7 +163,7 @@ pre code.hljs {
   box-shadow: none;
 }
 #top-settings-holder {
-  @extend %outline-nogap;
+  // @extend %outline-nogap;
   background-color: $bg-color;
   @extend %interactable-wrapper;
   @media screen and (max-width: $mobile-threshold) {
@@ -217,11 +228,17 @@ pre code.hljs {
 select,
 textarea,
 .neo-range-input,
+.range-block-counter input,
+.standoutHeader ~ .inline-drawer-content,
 .select2-container .select2-selection--multiple,
 .select2-container .select2-selection--single {
   @extend %bg-none;
   @extend %newmorph-inset-sm;
 } //做掉深色背景
+
+.gallery-sort-select {
+  @extend %bg-none-important;
+}
 
 .reasoning_edit_textarea,
 .edit_textarea {
@@ -241,7 +258,7 @@ textarea,
 
 #send_form {
   border-radius: 0;
-  @extend %outline-nogap;
+  // @extend %outline-nogap;
 }
 
 .mes_buttons,
@@ -262,12 +279,13 @@ textarea,
 .mes_edit_buttons {
   filter: none;
   @extend %interactable-wrapper;
-  .menu_button[disabled],
-  .menu_button.disabled {
-    @extend %bg-none;
-    filter: none;
-    box-shadow: none;
-  }
+}
+
+.menu_button[disabled],
+.menu_button.disabled {
+  @extend %bg-none;
+  filter: none;
+  box-shadow: none;
 }
 
 .welcomeHeaderTitle {
@@ -325,15 +343,71 @@ div .expression-holder,
   }
 }
 
-#leftSendForm,
-#rightSendForm {
-  @extend %rounded-md;
+#leftSendForm {
+  padding: 0;
   @extend %newmorph-outset-md;
-  @extend %interactable-wrapper;
-  .interactable:hover {
+}
+
+#rightSendForm {
+  div:not(.mes_stop) {
+    @extend %newmorph-outset-md;
+    &:hover {
+      @extend %newmorph-inset-md;
+    }
+  }
+
+  .mes_stop {
     @extend %newmorph-inset-md;
   }
 }
+
+#leftSendForm,
+#rightSendForm {
+  // @media screen and (min-width: $mobile-threshold) {
+  //   gap: 4px;
+  // }
+  @extend %rounded-md;
+  div {
+    opacity: 1;
+    &:hover {
+      filter: none;
+    }
+  }
+}
+// #leftSendForm,
+// #rightSendForm {
+//   @extend %rounded-md;
+//   @extend %newmorph-outset-md;
+//   @extend %interactable-wrapper;
+//   .interactable:hover {
+//     @extend %newmorph-inset-md;
+//   }
+// }
+
+#qr--bar,
+#extensionsMenu > .extension_container > div,
+#extensionsMenu > div:not(.extension_container),
+.options-content a,
+.list-group-item {
+  opacity: 1;
+}
+
+.options-content a,
+#extensionsMenu > .extension_container > div,
+#extensionsMenu > div:not(.extension_container),
+.list-group > div,
+.list-group .list-group-item,
+#sd_dropdown .list-group span {
+  align-items: center;
+}
+
+#extensionsMenu > .extension_container > div:hover,
+#extensionsMenu > div:not(.extension_container):hover,
+.options-content a:hover,
+.list-group-item:hover {
+  @extend %newmorph-inset-sm;
+}
+
 .qr--buttons {
   @extend %interactable-wrapper;
   .qr--button {
@@ -343,6 +417,11 @@ div .expression-holder,
     @extend %bg-none-important;
     @extend %newmorph-inset-md;
   }
+}
+
+input[type="search"] {
+  @extend %newmorph-inset-sm;
+  background-color: $bg-color;
 }
 
 input[type="checkbox"] {
@@ -442,6 +521,16 @@ input[type="range"] {
       @extend %newmorph-inset-sm;
     }
   }
+
+  &:hover {
+    filter: none;
+  }
+}
+
+#extensions_settings .inline-drawer-toggle.inline-drawer-header:hover,
+#extensions_settings2 .inline-drawer-toggle.inline-drawer-header:hover,
+.standoutHeader.inline-drawer-header:hover {
+  @extend %newmorph-inset-bg-fixed;
 }
 
 .menu_button:not(.disabled):not([disabled]) {
@@ -456,9 +545,51 @@ input[type="range"] {
   }
   @extend %bg-none;
   filter: none;
+
+  &.locked {
+    @extend %newmorph-inset-md;
+  }
 }
 
-.rm_tag_controls {
+#persona_connections_buttons {
+  .menu_button {
+    border: none;
+    &:not(.disabled):not([disabled]):not(.locked) {
+      &:hover {
+        @extend %newmorph-outset-md;
+        @extend %newmorph-inset-bg-md;
+      }
+    }
+  }
+}
+
+.avatar-container.selected,
+.select_chat_block[highlight],
+.swipe_picker_block[highlight] {
+  outline: none;
+  border: none;
+  @extend %newmorph-outset-md;
+  @extend %bg-none;
+}
+
+.bogus_folder_select:hover,
+.select_chat_block:hover,
+.swipe_picker_block:hover,
+.character_select:hover,
+.avatar-container:hover {
+  &:not(
+    .avatar-container.selected,
+    .select_chat_block[highlight],
+    .swipe_picker_block[highlight]
+  ) {
+    @extend %newmorph-outset-sm;
+  }
+  @extend %bg-none;
+}
+
+.rm_tag_controls,
+.mes_block,
+#persona-management-block .persona_management_left_column {
   overflow: visible;
 }
 
@@ -567,6 +698,12 @@ input[type="range"] {
 }
 #options,
 #extensionsMenu,
+.popup,
+#select_chat_popup,
 .popup .popper-modal {
   @extend %newmorph-outset-md;
+}
+
+.prompt_order > div {
+  @extend %bg-none;
 }
