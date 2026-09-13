@@ -32,6 +32,9 @@ body {
 
   ::-webkit-scrollbar {
     width: 0.5rem;
+    @media screen and (max-width: $mobile-threshold) {
+      width: 0.3rem;
+    }
     overflow: visible;
   }
   ::-webkit-scrollbar-track {
@@ -246,12 +249,24 @@ textarea,
   @extend %newmorph-inset-md;
 }
 
+.mes_reasoning_header {
+  @extend %bg-none;
+  @extend %newmorph-outset-md;
+}
+
+.mes_reasoning {
+  @extend %rounded-md;
+  border: none;
+  @extend %newmorph-inset-md;
+}
+
 #chat {
   @extend %rounded-md;
   @extend %newmorph-inset-md;
-  outline: solid 4px $bg-color;
+  outline: solid 5px $bg-color;
 }
-#extensionTopBar {
+#extensionTopBar,
+#extensionConnectionProfiles {
   border-radius: 0 !important;
   @extend %interactable-wrapper;
 }
@@ -262,7 +277,9 @@ textarea,
 }
 
 .mes_buttons,
+.mes_reasoning_actions,
 .welcomeHeaderTitle {
+  align-items: center;
   margin: 10px;
   @extend %rounded-md;
   @extend %newmorph-outset-md;
@@ -273,6 +290,7 @@ textarea,
     }
     border-radius: 50px;
     filter: none;
+    opacity: 1;
   }
 }
 
@@ -343,34 +361,41 @@ div .expression-holder,
   }
 }
 
-#leftSendForm {
-  padding: 0;
-  @extend %newmorph-outset-md;
-}
-
 #rightSendForm {
   div:not(.mes_stop) {
     @extend %newmorph-outset-md;
-    &:hover {
-      @extend %newmorph-inset-md;
-    }
   }
 
   .mes_stop {
+    @extend %rounded-md;
+    flex-grow: 1;
     @extend %newmorph-inset-md;
+    &:hover {
+      @extend %newmorph-inset-bg-md;
+      @extend %newmorph-outset-md;
+    }
+  }
+}
+
+#leftSendForm {
+  @extend %newmorph-outset-md;
+  @media screen and (min-width: $mobile-threshold) {
+    padding: 4px;
+    gap: 4px;
   }
 }
 
 #leftSendForm,
 #rightSendForm {
-  // @media screen and (min-width: $mobile-threshold) {
-  //   gap: 4px;
-  // }
   @extend %rounded-md;
+
+  min-height: var(--bottomFormBlockSize);
+  align-self: center;
   div {
-    opacity: 1;
+    opacity: 1 !important;
     &:hover {
       filter: none;
+      @extend %newmorph-inset-md;
     }
   }
 }
