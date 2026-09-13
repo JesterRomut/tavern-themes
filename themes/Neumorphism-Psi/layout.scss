@@ -1,6 +1,7 @@
 $top-settings-width: 4rem !default;
-$top-settings-padding: 1rem !default;
-@media screen and (min-width: 1000px) {
+$top-settings-padding: 0.625rem !default;
+$mobile-threshold: 1000px !default;
+@media screen and (min-width: $mobile-threshold) {
   body {
     display: flex;
   }
@@ -31,11 +32,8 @@ $top-settings-padding: 1rem !default;
     flex-direction: column;
     justify-content: flex-start;
     width: $top-settings-width;
-  }
-
-  #top-settings-holder {
-    padding-top: $top-settings-padding;
-    // gap: $top-settings-padding;
+    gap: $top-settings-padding;
+    padding: $top-settings-padding;
   }
 
   .drawer-content {
@@ -44,8 +42,9 @@ $top-settings-padding: 1rem !default;
     width: calc(100dvw - $top-settings-width);
   }
 }
-div .expression-holder {
+div .expression-holder,
+.zoomed_avatar {
   z-index: 114;
-  bottom: var(--formSheldHeight);
-  left: var(--nav-bar-width);
+  // bottom: var(--formSheldHeight);
+  left: $top-settings-width;
 }

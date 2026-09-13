@@ -1,7 +1,11 @@
-$bg-color: var(--SmartThemeChatTintColor) !default; //#e0e0e0
+$bg-color: color(
+  from var(--SmartThemeChatTintColor) srgb r g b / 1
+) !default; //#e0e0e0
 $shadow-color: #000 !default;
 $shadow-color-75: color-mix(in srgb, #000, transparent 75%) !default;
 $glow-color: #ffffff !default;
+$danger-color: #df2c3b !default;
+$mobile-threshold: 1000px !default;
 
 /* ---字体加载--- */
 @import url("https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.0/index.css");
@@ -18,6 +22,28 @@ $glow-color: #ffffff !default;
 
 body {
   font-family: var(--font-sans);
+
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+    overflow: visible;
+  }
+  ::-webkit-scrollbar-track {
+    @extend %bg-none;
+    overflow: visible;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, $glow-color, $bg-color 50%) !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow:
+      1px 1px 3px $shadow-color-75,
+      -1px -1px 3px $glow-color !important;
+    overflow: visible;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    // background: #555;
+    @extend %newmorph-inset-sm;
+  }
 }
 
 input,
@@ -57,16 +83,36 @@ pre code.hljs {
   font-family: var(--font-mono) !important;
 }
 
-%newmorph-common {
+%newmorph-outset-md {
   box-shadow:
     2px 2px 6px $shadow-color-75,
     -2px -2px 6px $glow-color;
 }
 
-%newmorph-inset {
+%newmorph-outset-sm {
+  box-shadow:
+    1px 1px 3px $shadow-color-75,
+    -1px -1px 3px $glow-color;
+}
+
+%newmorph-inset-md {
   box-shadow:
     inset 2px 2px 6px $shadow-color-75,
     inset -2px -2px 6px $glow-color;
+}
+
+%newmorph-inset-sm {
+  box-shadow:
+    inset 1px 1px 3px $shadow-color-75,
+    inset -1px -1px 3px $glow-color;
+}
+
+%newmorph-inset-bg-md {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, $shadow-color, transparent 79%),
+    color-mix(in srgb, $glow-color, transparent)
+  ); //#cacaca, #f0f0f0
 }
 
 %outline-nogap {
@@ -86,21 +132,31 @@ pre code.hljs {
   border-radius: 10px;
 }
 
+%bg-none {
+  background-color: transparent;
+  background: none;
+}
+
+%bg-none-important {
+  background-color: transparent !important;
+  background: none !important;
+}
 #top-settings-holder {
   @extend %outline-nogap;
-  gap: 10px;
-  padding: 10px;
   background-color: $bg-color;
   @extend %interactable-wrapper;
 }
 .drawer {
-  @extend %newmorph-common;
+  @extend %newmorph-outset-md;
   @extend %rounded-md;
   width: 100%;
   aspect-ratio: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: $mobile-threshold) {
+    box-shadow: none;
+  }
 
   & .drawer-icon {
     font-size: 1.6rem;
@@ -109,12 +165,8 @@ pre code.hljs {
 
   &:not(:has(.openIcon)) {
     &:hover {
-      background: linear-gradient(
-        145deg,
-        color-mix(in srgb, $shadow-color, transparent 79%),
-        color-mix(in srgb, $glow-color, transparent)
-      ); //#cacaca, #f0f0f0
-      @extend %newmorph-common;
+      @extend %newmorph-inset-bg-md;
+      @extend %newmorph-outset-md;
     }
 
     &:hover .drawer-icon {
@@ -123,17 +175,33 @@ pre code.hljs {
   }
 
   &:has(.openIcon) {
-    @extend %newmorph-inset;
+    @extend %newmorph-inset-md;
 
     .drawer-icon {
       filter: brightness(50);
     }
   }
+
+  .drawer-content {
+    .text_pole,
+    select,
+    textarea,
+    .neo-range-input,
+    .select2-container .select2-selection--multiple,
+    .select2-container .select2-selection--single {
+      @extend %bg-none;
+      @extend %newmorph-inset-sm;
+    } //做掉深色背景
+    * {
+      @extend %bg-none;
+    }
+    @extend %newmorph-outset-md;
+  }
 }
 
 #chat {
   @extend %rounded-md;
-  @extend %newmorph-inset;
+  @extend %newmorph-inset-md;
   outline: solid 4px $bg-color;
 }
 #extensionTopBar {
@@ -146,19 +214,33 @@ pre code.hljs {
   @extend %outline-nogap;
 }
 
-.mes_buttons {
+.mes_buttons,
+.welcomeHeaderTitle {
   margin: 10px;
   @extend %rounded-md;
-  @extend %newmorph-common;
+  @extend %newmorph-outset-md;
   @extend %interactable-wrapper;
   .mes_button {
     &:hover {
-      @extend %newmorph-inset;
+      @extend %newmorph-inset-md;
     }
     border-radius: 50px;
     filter: none;
   }
 }
+
+.welcomeHeaderTitle {
+  .welcomeHeaderVersionDisplay {
+    font-weight: normal;
+  }
+  padding: 0.5rem;
+}
+
+.welcomeRecent .recentChatList .recentChat:hover {
+  @extend %newmorph-inset-md;
+  @extend %bg-none;
+}
+
 .mes_text {
   p:has(q),
   h1,
@@ -166,7 +248,7 @@ pre code.hljs {
   h3,
   blockquote {
     @extend %rounded-md;
-    @extend %newmorph-common;
+    @extend %newmorph-outset-sm;
     padding: 0.2rem 0.4rem;
   }
   p:has(q) {
@@ -174,61 +256,105 @@ pre code.hljs {
   }
   blockquote {
     @extend %rounded-md;
-    background-color: transparent;
-    @extend %newmorph-inset;
+    @extend %bg-none;
+    @extend %newmorph-inset-sm;
   }
 }
 
 body.big-avatars .avatar img {
-  @extend %newmorph-common;
+  @extend %newmorph-outset-md;
   border: none;
 }
 
 #leftSendForm,
 #rightSendForm {
   @extend %rounded-md;
-  @extend %newmorph-common;
+  @extend %newmorph-outset-md;
   @extend %interactable-wrapper;
   .interactable:hover {
-    @extend %newmorph-inset;
+    @extend %newmorph-inset-md;
   }
 }
 .qr--buttons {
   @extend %interactable-wrapper;
   .qr--button {
-    @extend %newmorph-common;
+    @extend %newmorph-outset-md;
   }
   .qr--button:hover {
-    background: transparent !important;
-
-    @extend %newmorph-inset;
+    @extend %bg-none-important;
+    @extend %newmorph-inset-md;
   }
-}
-
-.drawer-content {
-  .text_pole,
-  select,
-  textarea,
-  .neo-range-input,
-  .select2-container .select2-selection--multiple,
-  .select2-container .select2-selection--single {
-    background-color: transparent;
-    @extend %newmorph-inset;
-  } //做掉深色背景
 }
 
 input[type="checkbox"] {
-  background: none;
-  @extend %newmorph-common;
+  &:not(:disabled) {
+    @extend %newmorph-outset-sm;
+  }
+  &:disabled {
+    box-shadow: none !important;
+    border: none;
+    outline: none;
+  }
+  @extend %bg-none;
 }
 
-.select2-container .select2-selection--multiple .select2-selection__choice,
-.select2-container .select2-selection--single .select2-selection__choice {
-  background-color: transparent;
-  @extend %newmorph-common;
-  button,
-  span {
-    background-color: transparent;
+.select2-container .select2-selection--multiple,
+.select2-container .select2-selection--single {
+  .select2-selection__choice {
+    overflow: visible;
+    @extend %bg-none;
+
+    button,
+    span {
+      @extend %bg-none;
+    }
+
+    .select2-selection__choice__remove {
+      height: 100%;
+    }
+
+    .select2-selection__choice__remove,
+    .select2-selection__choice__display {
+      @extend %newmorph-outset-sm;
+      &:hover {
+        @extend %bg-none;
+        @extend %newmorph-inset-sm;
+      }
+    }
+  }
+}
+
+.neo-range-slider {
+  border: none;
+  // @extend %newmorph-inset-bg-md;
+  background: color-mix(in srgb, $glow-color, transparent 50%) !important;
+  box-shadow: none !important;
+  @extend %newmorph-outset-sm;
+  filter: none !important;
+
+  &:not(:disabled):hover {
+    &::-webkit-slider-thumb {
+      @extend %newmorph-inset-md;
+    }
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: $glow-color !important;
+    border: 1px solid $bg-color !important;
+    // box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  &:not(:disabled)::-webkit-slider-thumb {
+    @extend %newmorph-outset-md;
+  }
+
+  &:disabled::-webkit-slider-thumb {
+    background: color-mix(in srgb, $glow-color, $bg-color 50%) !important;
+  }
+
+  &:disabled + .neo-range-input {
+    box-shadow: none !important;
   }
 }
 
@@ -236,6 +362,121 @@ input[type="checkbox"] {
 #extensions_settings2 .inline-drawer-toggle.inline-drawer-header,
 #user-settings-block h4,
 .standoutHeader {
-  @extend %newmorph-common;
-  background: none;
+  @extend %newmorph-outset-md;
+  @extend %interactable-wrapper;
+  @extend %bg-none;
+
+  .menu_button:not(.disabled):not([disabled]) {
+    @extend %newmorph-outset-sm;
+  }
+}
+
+.menu_button:not(.disabled):not([disabled]) {
+  @extend %newmorph-outset-md;
+  &:hover,
+  &.active {
+    @extend %newmorph-inset-md;
+    @extend %bg-none;
+    // * {
+    //   transform: translateX(2px), translateY(2px);
+    // }
+  }
+  @extend %bg-none;
+}
+
+.rm_tag_controls {
+  overflow: visible;
+}
+
+.tag.actionable {
+  @extend %newmorph-outset-md;
+  &:hover,
+  &.active {
+    @extend %newmorph-inset-md;
+  }
+}
+
+#completion_prompt_manager {
+  flex: 1;
+  .completion_prompt_manager_header {
+    color: var(--SmartThemeBodyColor);
+  }
+  .completion_prompt_manager_header,
+  .completion_prompt_manager_footer {
+    padding: 0;
+  }
+  .completion_prompt_manager_header_advanced span,
+  #completion_prompt_manager_list li.completion_prompt_manager_prompt span {
+    filter: none !important;
+  }
+  #completion_prompt_manager_list {
+    .completion_prompt_manager_prompt_disabled
+      .completion_prompt_manager_prompt_name,
+    .completion_prompt_manager_prompt_disabled
+      .completion_prompt_manager_prompt_name
+      .prompt-manager-inspect-action {
+      color: var(--SmartThemeBodyColor);
+    }
+
+    li.completion_prompt_manager_prompt {
+      border: none !important;
+    }
+
+    li.completion_prompt_manager_prompt:not(
+        .completion_prompt_manager_prompt_disabled
+      ) {
+      @extend %newmorph-outset-sm;
+    }
+  }
+}
+
+#delete_button,
+#dialogue_del_mes_ok,
+#dialogue_popup_ok,
+.redWarningBG,
+.red_button,
+.mes_edit_cancel.menu_button {
+  background-color: $danger-color !important;
+  stroke: #fff !important;
+  color: $bg-color !important;
+
+  &:hover {
+    border: 1px solid color-mix(in srgb, $glow-color, $bg-color 50%);
+  }
+  &::before {
+    filter: brightness(2);
+  }
+}
+
+.thumbnail-clipper {
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+#bg_tabs {
+  @extend %newmorph-outset-md;
+  .bg_tabs_list .bg_tab_button.ui-tabs-active {
+    @extend %newmorph-inset-sm;
+  }
+  #bg_global_tab {
+    box-shadow: none;
+
+    .bg_example {
+      @extend %newmorph-outset-sm;
+    }
+  }
+}
+
+.paginationjs-pages {
+  @extend %rounded-md;
+  @extend %newmorph-outset-md;
+  li {
+    @extend %rounded-md;
+  }
+  li.disabled {
+    opacity: 0.3;
+  }
+  li:not(.disabled):hover {
+    @extend %newmorph-inset-md;
+  }
 }
