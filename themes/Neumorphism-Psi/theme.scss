@@ -272,8 +272,13 @@ textarea,
 }
 
 #send_form {
+  border: none;
   border-radius: 0;
   // @extend %outline-nogap;
+  &:has(#send_textarea:focus-visible) {
+    outline: none;
+    border: none;
+  }
 }
 
 .mes_buttons,
@@ -358,21 +363,50 @@ div .expression-holder,
 .zoomed_avatar {
   .dragClose {
     filter: none;
+    height: unset;
+    background-color: $bg-color;
+    @extend %newmorph-outset-sm;
+    @extend %rounded-md;
+    opacity: 1;
+    &:hover {
+      background: linear-gradient(
+        145deg,
+        color-mix(in srgb, $shadow-color, $bg-color 79%),
+        color-mix(in srgb, $glow-color, $bg-color)
+      );
+    }
+  }
+}
+
+.file_attached {
+  display: flex;
+  @extend %bg-none;
+  @extend %newmorph-inset-md;
+  #file_form_reset {
+    @extend %rounded-md;
   }
 }
 
 #rightSendForm {
+  div {
+    display: flex;
+  }
   div:not(.mes_stop) {
     @extend %newmorph-outset-md;
   }
 
   .mes_stop {
     @extend %rounded-md;
-    flex-grow: 1;
+    // flex-grow: 1;
+
     @extend %newmorph-inset-md;
     &:hover {
       @extend %newmorph-inset-bg-md;
       @extend %newmorph-outset-md;
+    }
+
+    i:before {
+      filter: brightness(50);
     }
   }
 }

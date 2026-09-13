@@ -49,10 +49,14 @@ $sheld-width-offset: calc($top-settings-width - 2px);
     max-height: calc(100vh - var(--bottomFormBlockSize));
   }
 }
-div .expression-holder,
+div .expression-holder:has(#expression-image:not([src=""])),
 .zoomed_avatar {
   z-index: 114;
   // bottom: var(--formSheldHeight);
   left: $top-settings-width;
   bottom: var(--bottomFormBlockSize);
+  // pointer-events: none;
+  // &:hover {
+  //   opacity: 0.5;
+  // }
 }
