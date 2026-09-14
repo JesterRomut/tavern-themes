@@ -219,6 +219,12 @@ body {
   background: none !important;
 }
 
+$checkbox-color: color-mix(
+  in srgb,
+  var(--SmartThemeBodyColor),
+  transparent 20%
+);
+
 input,
 textarea,
 select,
@@ -647,11 +653,6 @@ div .expression-holder,
 }
 
 input {
-  $checkbox-color: color-mix(
-    in srgb,
-    var(--SmartThemeBodyColor),
-    transparent 20%
-  );
   &[type="search"] {
     @extend %newmorph-inset-sm;
     background-color: $bg-color;
@@ -1196,15 +1197,28 @@ body.charListGrid #charListGridToggle,
   @extend %bg-none;
 }
 
-.tag {
+.tag,
+.rm_tag_filter .tag {
   outline: none;
   border: none;
   @extend %newmorph-outset-sm;
+  @extend %filter-none;
+
+  &.selected {
+    @extend %newmorph-inset-sm;
+  }
 }
 
 .tags.tags_inline {
   overflow: visible;
   @extend %opacity-1;
+}
+
+.tag.indicator::after {
+  color: $bg-color;
+  text-shadow:
+    1px 1px 3px $shadow-color-75,
+    -1px -1px 3px $glow-color;
 }
 
 /*@Gruvbox*/
