@@ -65,6 +65,14 @@ body {
   }
 }
 
+%opacity-1 {
+  opacity: 1;
+}
+
+%filter-none {
+  filter: none;
+}
+
 %newmorph-outset-md {
   box-shadow:
     2px 2px 6px $shadow-color-75,
@@ -141,10 +149,10 @@ body {
 
 %interactable-wrapper {
   .interactable {
-    opacity: 1;
+    @extend %opacity-1;
   }
   .interactable:hover {
-    opacity: 1;
+    @extend %opacity-1;
   }
 }
 
@@ -246,7 +254,7 @@ pre code.hljs {
     }
 
     &:hover .drawer-icon {
-      opacity: 1;
+      @extend %opacity-1;
     }
   }
 
@@ -342,20 +350,24 @@ textarea,
       @extend %newmorph-inset-md;
     }
     border-radius: 50px;
-    filter: none;
-    opacity: 1;
+    @extend %filter-none;
+    @extend %opacity-1;
   }
+}
+.mes_button,
+.extraMesButtons > div {
+  @extend %filter-none;
 }
 
 .mes_edit_buttons {
-  filter: none;
+  @extend %filter-none;
   @extend %interactable-wrapper;
 }
 
 .menu_button[disabled],
 .menu_button.disabled {
   @extend %bg-none;
-  filter: none;
+  @extend %filter-none;
   box-shadow: none;
 }
 
@@ -417,12 +429,12 @@ body.big-avatars .avatar img {
 div .expression-holder,
 .zoomed_avatar {
   .dragClose {
-    filter: none;
+    @extend %filter-none;
     height: unset;
     background-color: $bg-color;
     @extend %newmorph-outset-sm;
     @extend %rounded-md;
-    opacity: 1;
+    @extend %opacity-1;
     &:hover {
       background: linear-gradient(
         145deg,
@@ -483,7 +495,7 @@ div .expression-holder,
   div {
     opacity: 1 !important;
     &:hover {
-      filter: none;
+      @extend %filter-none;
       @extend %newmorph-inset-md;
     }
   }
@@ -507,7 +519,7 @@ div .expression-holder,
 #bulkTagsList,
 #tagList .tag,
 #groupTagList .tag {
-  opacity: 1;
+  @extend %opacity-1;
 }
 
 .options-content a,
@@ -599,7 +611,7 @@ input {
       }
     }
     &:checked + span:after {
-      opacity: 1;
+      @extend %opacity-1;
       transform: scale(1, 1);
     }
   }
@@ -618,7 +630,7 @@ input {
     // .select2-search--dropdown {
     // }
     .select2-results .select2-results__option--selectable {
-      opacity: 1;
+      @extend %opacity-1;
     }
   }
 
@@ -725,7 +737,7 @@ input[type="range"] {
   }
 
   &:hover {
-    filter: none;
+    @extend %filter-none;
   }
 }
 
@@ -755,8 +767,8 @@ input[type="range"] {
   }
 
   &.disabledWIEntry {
-    opacity: 1;
-    filter: none;
+    @extend %opacity-1;
+    @extend %filter-none;
   }
   textarea.text_pole {
     @extend %newmorph-inset-md;
@@ -780,7 +792,7 @@ input[type="range"] {
 
 .inline-drawer-icon.interactable {
   @extend %newmorph-outset-md;
-  filter: none;
+  @extend %filter-none;
   &.up,
   &.fa-circle-chevron-up {
     @extend %newmorph-inset-md;
@@ -808,7 +820,7 @@ input[type="range"] {
     // }
   }
   @extend %bg-none;
-  filter: none;
+  @extend %filter-none;
 
   &.locked {
     @extend %newmorph-inset-md;
@@ -901,7 +913,7 @@ input[type="range"] {
   &.active {
     @extend %newmorph-inset-md;
   }
-  filter: none;
+  @extend %filter-none;
 
   &.selected {
     @extend %newmorph-inset-md;
@@ -1043,7 +1055,7 @@ input[type="range"] {
 
 .tags.tags_inline {
   overflow: visible;
-  opacity: 1;
+  @extend %opacity-1;
 }
 
 /*@Gruvbox*/
@@ -1111,8 +1123,8 @@ input[type="range"] {
 #lm_button_panel_pin_div,
 #rm_button_panel_pin_div,
 #WI_panel_pin_div {
-  filter: none;
-  opacity: 1;
+  @extend %filter-none;
+  @extend %opacity-1;
   div {
     filter: none !important;
 
@@ -1150,4 +1162,21 @@ input[type="range"] {
       margin: 0;
     }
   }
+}
+
+.swipe_right,
+.swipe_left,
+.swipes-counter {
+  @extend %opacity-1;
+}
+
+.swipe_left,
+.swipe_right {
+  @extend %rounded-md;
+  &:hover {
+    @extend %newmorph-inset-md;
+  }
+}
+a:hover {
+  @extend %filter-none;
 }
