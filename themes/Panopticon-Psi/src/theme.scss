@@ -19,7 +19,8 @@ $icon-offline: "%23bf2734" !default;
 $bg-color: "transparent" !default;
 
 @use "icons-fa.scss" with (
-  $icon-color: $icon-color
+  $icon-color: $icon-color,
+  $icon-offline: $icon-offline
 );
 
 $highlight-color: color(
@@ -36,6 +37,11 @@ $highlight-color: color(
   --font-mono:
     "JetBrains Mono", "Cascadia Code", ui-monospace, Menlo, Consolas,
     "Source Han Sans SC VF", monospace;
+
+  --golden: var(--SmartThemeQuoteColor);
+  --warning: var(--SmartThemeQuoteColor);
+  --active: var(--SmartThemeQuoteColor);
+  --preferred: var(--SmartThemeQuoteColor);
 }
 
 body {
@@ -339,6 +345,40 @@ textarea,
   @extend %bg-none-important;
 }
 
+%gallery-text-overlay {
+  font-weight: 500;
+  background: linear-gradient(transparent, $bg-color 80%);
+}
+.bg_folder_tile {
+  @extend %bg-none;
+  @extend %newmorph-outset-md;
+  outline: none;
+  border: none;
+  .bg_folder_tile_overlay {
+    @extend %gallery-text-overlay;
+  }
+  .bg_folder_tile_menu {
+    @extend %bg-none;
+  }
+}
+
+.bg_example .BGSampleTitle {
+  @extend %gallery-text-overlay;
+}
+.jg-menu,
+.bg_example .jg-menu,
+.bg_folder_tile .jg-menu {
+  background-color: $bg-color;
+  @extend %newmorph-dialog-md;
+  .jg-button:hover {
+    @extend %bg-none;
+    @extend %newmorph-inset-md;
+  }
+}
+.locked-background .jg-unlock {
+  @extend %menu-button-lit;
+}
+
 .reasoning_edit_textarea,
 .edit_textarea {
   @extend %bg-none;
@@ -466,25 +506,42 @@ body.big-avatars .avatar img {
   color: var(--SmartThemeBodyColor);
 }
 
-div .expression-holder,
-.zoomed_avatar {
-  .dragClose {
-    @extend %filter-none;
-    height: unset;
-    background-color: $bg-color;
-    @extend %newmorph-outset-sm;
-    @extend %rounded-md;
-    @extend %opacity-1;
-    &:hover {
-      background: linear-gradient(
-        145deg,
-        color-mix(in srgb, $shadow-color, $bg-color 79%),
-        color-mix(in srgb, $glow-color, $bg-color)
-      );
-    }
+%img-control {
+  @extend %filter-none;
+
+  background-color: $bg-color;
+  @extend %newmorph-dialog-md;
+  @extend %rounded-sm;
+  @extend %opacity-1;
+  &:hover {
+    background: linear-gradient(
+      145deg,
+      color-mix(in srgb, $shadow-color, $bg-color 79%),
+      color-mix(in srgb, $glow-color, $bg-color)
+    );
   }
 }
 
+div .expression-holder,
+.zoomed_avatar {
+  .dragClose {
+    height: unset;
+    @extend %img-control;
+  }
+}
+.dragClose {
+  @extend %filter-none;
+  @extend %opacity-1;
+  @extend %rounded-sm;
+  &:hover {
+    @extend %newmorph-inset-md;
+  }
+}
+
+.draggable {
+  @extend %filter-none;
+  @extend %newmorph-dialog-md;
+}
 .file_attached {
   display: flex;
   @extend %bg-none;
@@ -849,6 +906,18 @@ input[type="range"] {
   }
 }
 
+%menu-button-lit {
+  @extend %newmorph-inset-md;
+  &::before {
+    filter: brightness(50);
+  }
+
+  &:hover {
+    @extend %newmorph-outset-md;
+    @extend %newmorph-inset-bg-md;
+  }
+}
+
 .menu_button:not(.disabled):not([disabled]) {
   @extend %newmorph-outset-md;
   &:hover,
@@ -868,18 +937,17 @@ input[type="range"] {
 
   &.world_set,
   &.fav_on {
-    @extend %newmorph-inset-md;
-    &::before {
-      filter: brightness(50);
-    }
-
-    &:hover {
-      @extend %newmorph-outset-md;
-      @extend %newmorph-inset-bg-md;
-    }
+    @extend %menu-button-lit;
   }
 }
+body.charListGrid #charListGridToggle,
+#bulkEditButton.bulk_edit_overlay_active {
+  @extend %menu-button-lit;
+}
 
+#PersonaManagement:has(#user_avatar_block.gridView) #persona_grid_toggle {
+  @extend %menu-button-lit;
+}
 // #world_button.world_set,
 // #persona_lore_button.world_set,
 // #favorite_button.fav_on,
@@ -1017,10 +1085,22 @@ input[type="range"] {
 #delete_button,
 #dialogue_del_mes_ok,
 #dialogue_popup_ok,
+.menu_button.popup-button-ok,
 .redWarningBG,
 .red_button,
 .mes_edit_cancel.menu_button {
-  background-color: $danger-color !important;
+  border-color: $danger-color;
+  background-color: $danger-color;
+  background: linear-gradient(
+    145deg,
+    color-mix(
+      in srgb,
+      $danger-color,
+      color(from #{$glow-color} srgb r g b / 1) 40%
+    ),
+    $danger-color,
+    color-mix(in srgb, $danger-color, $shadow-color 40%)
+  ) !important;
   stroke: #fff !important;
   color: $bg-color !important;
 
@@ -1081,6 +1161,33 @@ input[type="range"] {
 .popup .popper-modal {
   &:not(:has(#loader)) {
     @extend %newmorph-dialog-md;
+  }
+}
+
+#character_context_menu {
+  border: none;
+  outline: none;
+  @extend %newmorph-dialog-md;
+  background-color: $bg-color;
+  @extend %rounded-sm;
+  ul li button {
+    @extend %rounded-sm;
+    color: var(--SmartThemeBodyColor);
+    &:hover {
+      @extend %bg-none;
+      color: var(--SmartThemeQuoteColor);
+      @extend %newmorph-inset-md;
+    }
+    font-weight: normal;
+    border: none;
+  }
+
+  ul li #character_context_menu_delete {
+    color: $danger-color;
+  }
+
+  .character_context_menu_separator {
+    display: none;
   }
 }
 
@@ -1247,9 +1354,55 @@ a:hover {
     }
   }
 }
+.optional {
+  color: var(--SmartThemeEmColor);
+}
 
 .popup[open]::backdrop {
   background-color: color(from $bg-color srgb r g b / 0.6);
   backdrop-filter: blur(var(--SmartThemeBlurStrength));
   -webkit-backdrop-filter: blur(var(--SmartThemeBlurStrength));
+}
+
+#BogusFolderBack {
+  margin: 5px;
+  max-width: calc(100% - 10px);
+  @extend %newmorph-outset-md;
+  align-items: baseline !important;
+  .ch_name {
+    font-weight: normal;
+  }
+
+  &:hover {
+    @extend %newmorph-outset-md;
+    @extend %newmorph-inset-bg-fixed;
+  }
+}
+
+.mes_media_container {
+  @extend %bg-none;
+  @extend %newmorph-outset-md;
+
+  .audio-player-progress {
+    @extend %newmorph-inset-sm;
+  }
+
+  .mes_img_controls,
+  .mes_video_controls {
+    @extend %bg-none;
+    .interactable {
+      @extend %img-control;
+      &::before {
+        top: 0 !important;
+      }
+    }
+  }
+}
+.right_menu_button {
+  @extend %opacity-1;
+  @extend %filter-none;
+  &:hover {
+    @extend %filter-none;
+    @extend %newmorph-inset-md;
+  }
 }
