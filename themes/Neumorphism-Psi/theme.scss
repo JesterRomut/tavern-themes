@@ -97,6 +97,18 @@ body {
     -1px -1px 1px 0px $glow-color !important;
 }
 
+%newmorph-dialog-md {
+  box-shadow:
+    2px 2px 6px $shadow-color-75,
+    inset 2px 2px 6px $glow-color;
+}
+
+%newmorph-dialog-md-important {
+  box-shadow:
+    2px 2px 6px $shadow-color-75,
+    inset 2px 2px 6px $glow-color !important;
+}
+
 %newmorph-inset-md {
   box-shadow:
     inset 2px 2px 6px $shadow-color-75,
@@ -224,6 +236,7 @@ pre code.hljs {
     //   transparent 85%,
     //   $shadow-color-75
     // );
+    box-shadow: inset 2px 2px 6px $glow-color;
     outline: none;
     // box-shadow:
     //   2px 2px 6px $shadow-color-75,
@@ -1032,14 +1045,14 @@ input[type="range"] {
 
 #character_popup {
   @extend %rounded-md;
-  @extend %newmorph-outset-md;
+  @extend %newmorph-dialog-md;
 }
 #options,
 #extensionsMenu,
 .popup,
 #select_chat_popup,
 .popup .popper-modal {
-  @extend %newmorph-outset-md;
+  @extend %newmorph-dialog-md;
 }
 
 .prompt_order > div,
@@ -1064,11 +1077,12 @@ input[type="range"] {
   background-color: $bg-color !important;
   background-image: none !important;
   color: var(--SmartThemeBodyColor) !important;
-  border: 1px solid var(--SmartThemeBorderColor) !important;
+  //border: 1px solid var(--SmartThemeBorderColor) !important;
+  border: none !important;
   border-left: 3px solid var(--SmartThemeQuoteColor) !important;
   border-radius: 4px !important;
   // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
-  @extend %newmorph-outset-md-important;
+  @extend %newmorph-dialog-md-important;
   text-shadow: none !important;
   background-size: 2rem !important;
   background-position: 4% !important;
@@ -1179,4 +1193,34 @@ input[type="range"] {
 }
 a:hover {
   @extend %filter-none;
+}
+
+.extensions_info {
+  .extension_block {
+    @extend %newmorph-outset-sm;
+    .extension_disabled {
+      color: var(--SmartThemeBodyColor);
+    }
+    .extension_missing {
+      color: var(--SmartThemeBodyColor);
+    }
+
+    .extension_name.update_available {
+      color: var(--SmartThemeQuoteColor);
+    }
+    &:has(.extension_disabled) {
+      box-shadow: none;
+    }
+
+    &:has(.extension_name.update_available) {
+      //color: limegreen;
+      @extend %newmorph-outset-md;
+    }
+  }
+}
+
+.popup[open]::backdrop {
+  background-color: color(from $bg-color srgb r g b / 0.6);
+  backdrop-filter: blur(var(--SmartThemeBlurStrength));
+  -webkit-backdrop-filter: blur(var(--SmartThemeBlurStrength));
 }
