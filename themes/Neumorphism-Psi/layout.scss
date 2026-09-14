@@ -6,7 +6,7 @@ $panel-width: calc(100vw - var(--sheldWidth)) !default;
 $sheld-left-offset: calc($top-settings-width - 2px);
 $sheld-width: calc(
   100vw -
-    $top-settings-width - var(--preset-panel-width) - var(--chara-panel-width) -
+    $top-settings-width - var(--preset-panel-width) - var(--chara-panel-width) +
     2px
 );
 
@@ -54,7 +54,9 @@ $sheld-width: calc(
     left: $sheld-left-offset;
     width: $sheld-width;
     right: unset;
-    max-height: calc(100vh - var(--bottomFormBlockSize));
+    &:not(#left-nav-panel, #right-nav-panel) {
+      max-height: calc(100vh - var(--bottomFormBlockSize));
+    }
   }
 
   #chat {
@@ -85,6 +87,7 @@ $sheld-width: calc(
   #right-nav-panel {
     left: unset;
     width: $panel-width;
+    max-height: 100vh;
   }
 
   body:has(#left-nav-panel.openDrawer) {

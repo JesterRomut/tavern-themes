@@ -472,7 +472,6 @@ div .expression-holder,
   }
 }
 
-
 // #leftSendForm,
 // #rightSendForm {
 //   @extend %rounded-md;
@@ -904,6 +903,7 @@ input[type="range"] {
   div {
     filter: none !important;
 
+    @extend %rounded-sm;
     &:hover {
       @extend %newmorph-outset-sm;
       @extend %newmorph-inset-bg-md;
