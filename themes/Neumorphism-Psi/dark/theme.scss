@@ -2,9 +2,7 @@
   //#e0e0e0
   $shadow-color-75: #000000,
   $glow-color: #ffffff28,
-  $danger-color: #851b24
-);
-@use "icons-fa.scss" with (
+  $danger-color: #851b24,
   $icon-color: "%23aaaaaa",
   $icon-offline: "%23851b24"
 );

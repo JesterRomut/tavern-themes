@@ -2,7 +2,7 @@
 
 好想要新拟物主题
 感谢`https://neumorphism.io/`
-感谢[Gruvbox](https://github.com/KronosXup/sillytavern-gruvbox-harmony)
+感谢[Gruvbox](https://github.com/KronosXup/sillytavern-gruvbox-harmony)的图标大改
 
 ```bash
 # 安装依赖

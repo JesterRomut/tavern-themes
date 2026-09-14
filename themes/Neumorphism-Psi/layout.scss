@@ -1,8 +1,16 @@
 $top-settings-width: 4rem !default;
 $top-settings-padding: 0.625rem !default;
 $mobile-threshold: 1000px !default;
+$preset-panel-width: 10rem;
 
-$sheld-width-offset: calc($top-settings-width - 2px);
+$sheld-left-offset: calc($top-settings-width - 2px);
+$sheld-width-offset: calc(
+  $top-settings-width + var(--preset-panel-width) - 2px
+);
+
+:root {
+  --preset-panel-width: 0px;
+}
 @media screen and (min-width: $mobile-threshold) {
   body {
     display: flex;
@@ -16,7 +24,7 @@ $sheld-width-offset: calc($top-settings-width - 2px);
   }
 
   #sheld {
-    left: $sheld-width-offset;
+    left: $sheld-left-offset;
     justify-content: left;
     margin: unset;
     min-height: 100vh;
@@ -48,15 +56,25 @@ $sheld-width-offset: calc($top-settings-width - 2px);
   #chat {
     max-height: calc(100vh - var(--bottomFormBlockSize));
   }
+
+  div .expression-holder:has(#expression-image:not([src=""])),
+  .zoomed_avatar {
+    z-index: 114;
+    // bottom: var(--formSheldHeight);
+    left: $top-settings-width;
+    bottom: var(--bottomFormBlockSize);
+    // pointer-events: none;
+    // &:hover {
+    //   opacity: 0.5;
+    // }
+  }
+
+  #left-nav-panel {
+    right: 0;
+    left: unset;
+    width: $preset-panel-width;
+  }
 }
-div .expression-holder:has(#expression-image:not([src=""])),
-.zoomed_avatar {
-  z-index: 114;
-  // bottom: var(--formSheldHeight);
-  left: $top-settings-width;
-  bottom: var(--bottomFormBlockSize);
-  // pointer-events: none;
-  // &:hover {
-  //   opacity: 0.5;
-  // }
+body:has(#left-nav-panel.openDrawer) {
+  --preset-panel-width: $preset-panel-width !important;
 }

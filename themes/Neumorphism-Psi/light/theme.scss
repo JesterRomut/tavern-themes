@@ -1,5 +1,4 @@
-@use "../theme.scss";
-@use "icons-fa.scss" with (
+@use "../theme.scss" with (
   $icon-color: "%23666666"
 );
 @use "../layout.scss";
