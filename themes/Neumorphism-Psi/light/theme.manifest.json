@@ -19,7 +19,7 @@
   "chat_display": 1,
   "toastr_position": "toast-top-center",
   "noShadows": true,
-  "chat_width": 58,
+  "chat_width": 70,
   "timer_enabled": true,
   "timestamps_enabled": true,
   "timestamp_model_icon": false,
