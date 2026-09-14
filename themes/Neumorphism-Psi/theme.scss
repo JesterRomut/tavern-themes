@@ -768,6 +768,29 @@ input[type="range"] {
   &.active {
     @extend %newmorph-inset-md;
   }
+  filter: none;
+
+  &.selected {
+    @extend %newmorph-inset-md;
+    .fa-solid::before {
+      filter: brightness(50);
+    }
+
+    &:hover,
+    &.active {
+      @extend %newmorph-outset-md;
+      background-image: linear-gradient(
+        145deg,
+        color-mix(in srgb, $shadow-color, transparent 79%),
+        color-mix(in srgb, $glow-color, transparent)
+      );
+    }
+  }
+  // &.excluded {
+  //   box-shadow: none;
+  //   @extend %bg-none;
+  //   border: none;
+  // }
 }
 
 #completion_prompt_manager {
@@ -975,5 +998,5 @@ input[type="range"] {
 #right-nav-panel {
   border-radius: 0;
   //box-shadow: none;
-  box-shadow: 6px 0px 6px color-mix(in srgb, $shadow-color, transparent 85%);
+  box-shadow: 3px 0px 3px color-mix(in srgb, $shadow-color, transparent 85%);
 }
