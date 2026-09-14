@@ -19,76 +19,6 @@ $sheld-width: calc(
   body {
     display: flex;
   }
-  #top-bar {
-    border-bottom: unset;
-    margin: unset;
-    width: unset;
-    height: unset;
-    position: unset;
-  }
-
-  #sheld {
-    left: $sheld-left-offset;
-    justify-content: left;
-    margin: unset;
-    min-height: 100vh;
-    min-height: 100dvh;
-    max-height: unset;
-    top: 0;
-    width: $sheld-width;
-  }
-  #top-settings-holder {
-    margin: unset;
-    position: unset;
-    height: 100vh;
-    height: 100dvh;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: $top-settings-width;
-    gap: $top-settings-padding;
-    padding: $top-settings-padding;
-  }
-
-  .drawer-content {
-    top: 0;
-    left: $sheld-left-offset;
-    width: $sheld-width;
-    right: unset;
-    &:not(#left-nav-panel, #right-nav-panel) {
-      max-height: calc(100vh - var(--bottomFormBlockSize));
-    }
-  }
-
-  #chat {
-    max-height: calc(100vh - var(--bottomFormBlockSize));
-  }
-
-  div .expression-holder:has(#expression-image:not([src=""])),
-  .zoomed_avatar {
-    z-index: 114;
-    // bottom: var(--formSheldHeight);
-    left: $top-settings-width;
-    bottom: var(--bottomFormBlockSize);
-    // pointer-events: none;
-    // &:hover {
-    //   opacity: 0.5;
-    // }
-  }
-
-  #left-nav-panel {
-    right: 0;
-  }
-
-  #right-nav-panel {
-    right: var(--preset-panel-width);
-  }
-
-  #left-nav-panel,
-  #right-nav-panel {
-    left: unset;
-    width: $panel-width;
-    max-height: 100vh;
-  }
 
   body:has(#left-nav-panel.openDrawer) {
     --preset-panel-width: #{$panel-width} !important;
@@ -96,5 +26,78 @@ $sheld-width: calc(
 
   body:has(#right-nav-panel.openDrawer) {
     --chara-panel-width: #{$panel-width} !important;
+  }
+
+  body:not(.waifuMode) {
+    #top-bar {
+      border-bottom: unset;
+      margin: unset;
+      width: unset;
+      height: unset;
+      position: unset;
+    }
+
+    #sheld {
+      left: $sheld-left-offset;
+      justify-content: left;
+      margin: unset;
+      min-height: 100vh;
+      min-height: 100dvh;
+      max-height: unset;
+      top: 0;
+      width: $sheld-width;
+    }
+    #top-settings-holder {
+      margin: unset;
+      position: unset;
+      height: 100vh;
+      height: 100dvh;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: $top-settings-width;
+      gap: $top-settings-padding;
+      padding: $top-settings-padding;
+    }
+
+    .drawer-content {
+      top: 0;
+      left: $sheld-left-offset;
+      width: $sheld-width;
+      right: unset;
+      &:not(#left-nav-panel, #right-nav-panel) {
+        max-height: calc(100vh - var(--bottomFormBlockSize));
+      }
+    }
+
+    #chat {
+      max-height: calc(100vh - var(--bottomFormBlockSize));
+    }
+
+    div .expression-holder:has(#expression-image:not([src=""])),
+    .zoomed_avatar {
+      z-index: 114;
+      // bottom: var(--formSheldHeight);
+      left: $top-settings-width;
+      bottom: var(--bottomFormBlockSize);
+      // pointer-events: none;
+      // &:hover {
+      //   opacity: 0.5;
+      // }
+    }
+
+    #left-nav-panel {
+      right: 0;
+    }
+
+    #right-nav-panel {
+      right: var(--preset-panel-width);
+    }
+
+    #left-nav-panel,
+    #right-nav-panel {
+      left: unset;
+      width: $panel-width;
+      max-height: 100vh;
+    }
   }
 }

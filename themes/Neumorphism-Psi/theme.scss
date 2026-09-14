@@ -20,7 +20,9 @@ $bg-color: "transparent" !default;
   $icon-color: $icon-color
 );
 
-$highlight-color: color-mix(in srgb, #fff, $bg-color 50%);
+$highlight-color: color(
+  from color-mix(in srgb, $glow-color, $bg-color 50%) srgb r g b / 1
+); //color-mix(in srgb, #fff, $bg-color 50%);
 
 @import url("https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.0/index.css");
 @import url("https://cdn.jsdelivr.net/npm/@lobehub/webfont-harmony-sans-sc@1.0.0/css/index-full.css");
@@ -257,6 +259,10 @@ pre code.hljs {
     // }
     @extend %newmorph-outset-md;
   }
+
+  .info-block {
+    @extend %bg-none;
+  }
 }
 
 .text_pole,
@@ -486,7 +492,10 @@ div .expression-holder,
 #extensionsMenu > .extension_container > div,
 #extensionsMenu > div:not(.extension_container),
 .options-content a,
-.list-group-item {
+.list-group-item,
+#bulkTagsList,
+#tagList .tag,
+#groupTagList .tag {
   opacity: 1;
 }
 
@@ -605,8 +614,13 @@ input[type="range"] {
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    background: $highlight-color !important;
-    border: 1px solid $bg-color !important;
+    // background: $highlight-color !important;
+    background: linear-gradient(
+      145deg,
+      color-mix(in srgb, color(from #{$glow-color} srgb r g b / 1), $bg-color),
+      color-mix(in srgb, $shadow-color, $bg-color 79%)
+    ) !important;
+    border: 1px solid $highlight-color !important;
     // box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
 
@@ -626,7 +640,8 @@ input[type="range"] {
 #extensions_settings .inline-drawer-toggle.inline-drawer-header,
 #extensions_settings2 .inline-drawer-toggle.inline-drawer-header,
 #user-settings-block h4,
-.standoutHeader {
+.standoutHeader,
+.standoutHeader.inline-drawer-header {
   @extend %newmorph-outset-md;
   @extend %interactable-wrapper;
   @extend %bg-none;
@@ -665,7 +680,37 @@ input[type="range"] {
   &.locked {
     @extend %newmorph-inset-md;
   }
+
+  &.world_set,
+  &.fav_on {
+    @extend %newmorph-inset-md;
+    &::before {
+      filter: brightness(50);
+    }
+
+    &:hover {
+      @extend %newmorph-outset-md;
+      @extend %newmorph-inset-bg-md;
+    }
+  }
 }
+
+// #world_button.world_set,
+// #persona_lore_button.world_set,
+// #favorite_button.fav_on,
+// .chat_lorebook_button.world_set {
+//   &:not(.disabled):not([disabled]) {
+//     @extend %newmorph-inset-md;
+//     &::before {
+//       filter: brightness(50);
+//     }
+
+//     &:hover {
+//       @extend %newmorph-outset-md;
+//       @extend %newmorph-inset-bg-md;
+//     }
+//   }
+// }
 
 #persona_connections_buttons {
   .menu_button {
@@ -829,8 +874,20 @@ input[type="range"] {
   @extend %newmorph-outset-md;
 }
 
-.prompt_order > div {
+.prompt_order > div,
+.tag {
   @extend %bg-none;
+}
+
+.tag {
+  outline: none;
+  border: none;
+  @extend %newmorph-outset-sm;
+}
+
+.tags.tags_inline {
+  overflow: visible;
+  opacity: 1;
 }
 
 /*@Gruvbox*/
@@ -912,4 +969,11 @@ input[type="range"] {
       @extend %newmorph-inset-sm;
     }
   }
+}
+
+#left-nav-panel,
+#right-nav-panel {
+  border-radius: 0;
+  //box-shadow: none;
+  box-shadow: 6px 0px 6px color-mix(in srgb, $shadow-color, transparent 85%);
 }

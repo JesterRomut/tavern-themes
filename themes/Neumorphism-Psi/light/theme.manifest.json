@@ -1,5 +1,5 @@
 {
-  "name": "Panopticon-Psi-Light_0.0.6",
+  "name": "Panopticon-Psi-Light_0.0.7",
   "blur_strength": 15,
   "main_text_color": "rgba(48, 48, 48, 1)",
   "italics_text_color": "rgba(48, 48, 48, 0.6)",
@@ -22,7 +22,7 @@
   "chat_width": 70,
   "timer_enabled": true,
   "timestamps_enabled": true,
-  "timestamp_model_icon": false,
+  "timestamp_model_icon": true,
   "mesIDDisplay_enabled": true,
   "hideChatAvatars_enabled": false,
   "message_token_count_enabled": true,
@@ -31,10 +31,10 @@
   "enableLabMode": false,
   "hotswap_enabled": true,
   "bogus_folders": true,
-  "zoomed_avatar_magnification": false,
-  "reduced_motion": false,
+  "zoomed_avatar_magnification": true,
+  "reduced_motion": true,
   "compact_input_area": true,
-  "show_swipe_num_all_messages": false,
+  "show_swipe_num_all_messages": true,
   "click_to_edit": false,
   "media_display": "list"
 }
