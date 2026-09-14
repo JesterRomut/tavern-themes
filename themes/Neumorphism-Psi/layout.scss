@@ -1,17 +1,21 @@
 $top-settings-width: 4rem !default;
 $top-settings-padding: 0.625rem !default;
 $mobile-threshold: 1000px !default;
-$preset-panel-width: 10rem;
+$panel-width: calc(100vw - var(--sheldWidth)) !default;
 
 $sheld-left-offset: calc($top-settings-width - 2px);
-$sheld-width-offset: calc(
-  $top-settings-width + var(--preset-panel-width) - 2px
+$sheld-width: calc(
+  100vw -
+    $top-settings-width - var(--preset-panel-width) - var(--chara-panel-width) -
+    2px
 );
 
-:root {
-  --preset-panel-width: 0px;
-}
 @media screen and (min-width: $mobile-threshold) {
+  :root {
+    --preset-panel-width: 0px;
+    --chara-panel-width: 0px;
+  }
+
   body {
     display: flex;
   }
@@ -31,8 +35,7 @@ $sheld-width-offset: calc(
     min-height: 100dvh;
     max-height: unset;
     top: 0;
-    width: calc(100vw - $sheld-width-offset);
-    width: calc(100dvw - $sheld-width-offset);
+    width: $sheld-width;
   }
   #top-settings-holder {
     margin: unset;
@@ -48,9 +51,10 @@ $sheld-width-offset: calc(
 
   .drawer-content {
     top: 0;
-    left: $top-settings-width;
-    width: calc(100vw - $top-settings-width);
-    width: calc(100dvw - $top-settings-width);
+    left: $sheld-left-offset;
+    width: $sheld-width;
+    right: unset;
+    max-height: calc(100vh - var(--bottomFormBlockSize));
   }
 
   #chat {
@@ -71,10 +75,23 @@ $sheld-width-offset: calc(
 
   #left-nav-panel {
     right: 0;
-    left: unset;
-    width: $preset-panel-width;
   }
-}
-body:has(#left-nav-panel.openDrawer) {
-  --preset-panel-width: $preset-panel-width !important;
+
+  #right-nav-panel {
+    right: var(--preset-panel-width);
+  }
+
+  #left-nav-panel,
+  #right-nav-panel {
+    left: unset;
+    width: $panel-width;
+  }
+
+  body:has(#left-nav-panel.openDrawer) {
+    --preset-panel-width: #{$panel-width} !important;
+  }
+
+  body:has(#right-nav-panel.openDrawer) {
+    --chara-panel-width: #{$panel-width} !important;
+  }
 }

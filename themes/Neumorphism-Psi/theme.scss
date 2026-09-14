@@ -391,6 +391,12 @@ body.big-avatars .avatar img {
   border: none;
 }
 
+.character_select.is_fav .ch_name,
+.group_select.is_fav .ch_name,
+.group_member.is_fav .ch_name {
+  color: var(--SmartThemeBodyColor);
+}
+
 div .expression-holder,
 .zoomed_avatar {
   .dragClose {
@@ -698,6 +704,9 @@ input[type="range"] {
     @extend %newmorph-outset-sm;
   }
   @extend %bg-none;
+  &:hover {
+    @extend %bg-none;
+  }
 }
 
 .rm_tag_controls,
@@ -889,7 +898,8 @@ input[type="range"] {
 #rm_button_panel_pin_div,
 #WI_panel_pin_div {
   filter: none;
-  .interactable {
+  opacity: 1;
+  div {
     filter: none !important;
 
     &:hover {
