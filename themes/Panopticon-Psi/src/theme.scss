@@ -1,6 +1,8 @@
 /*
-@Kernschmelze - https://github.com/JesterRomut/tavern-themes
+@Kernschmelze - https://github.com/JesterRomut/tavern-themes/tree/main/themes/Panopticon-Psi
+
 图标修改@Gruvbox - https://github.com/KronosXup/sillytavern-gruvbox-harmony
+
 禁止商业化或倒卖
 */
 
@@ -38,39 +40,55 @@ $highlight-color: color(
 
 body {
   font-family: var(--font-sans);
+}
 
-  ::-webkit-scrollbar {
-    width: 0.5rem;
-    @media screen and (max-width: $mobile-threshold) {
-      width: 0.3rem;
-    }
-    overflow: visible;
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: $highlight-color $shadow-color-75;
   }
-  ::-webkit-scrollbar-track {
-    @extend %bg-none;
-    overflow: visible;
-    background: linear-gradient(
-      to right,
-      color-mix(in srgb, $shadow-color-75, transparent),
-      transparent
-    ) !important;
-    &:hover {
+}
+@supports selector(::-webkit-scrollbar) {
+  %rounded-scrollbar {
+    @extend %rounded-md;
+  }
+  body {
+    ::-webkit-scrollbar {
+      width: 0.5rem;
+      @media screen and (max-width: $mobile-threshold) {
+        width: 0.3rem;
+      }
+      overflow: visible;
+      @extend %rounded-scrollbar;
+    }
+    ::-webkit-scrollbar-track {
+      @extend %rounded-scrollbar;
+      @extend %bg-none;
+      border-radius: 2px;
+      overflow: visible;
       background: linear-gradient(
         to right,
-        $shadow-color-75,
+        color-mix(in srgb, $shadow-color-75, transparent),
         transparent
       ) !important;
+      &:hover {
+        background: linear-gradient(
+          to right,
+          $shadow-color-75,
+          transparent
+        ) !important;
+      }
     }
-  }
-  ::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, $glow-color, $bg-color 50%) !important;
-    border: none !important;
-    outline: none !important;
-    @extend %newmorph-outset-md-important;
-    overflow: visible;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    @extend %newmorph-inset-sm;
+    ::-webkit-scrollbar-thumb {
+      background: color-mix(in srgb, $glow-color, $bg-color 50%) !important;
+      border: none !important;
+      outline: none !important;
+      @extend %newmorph-outset-md-important;
+      overflow: visible;
+      @extend %rounded-scrollbar;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      @extend %newmorph-inset-sm;
+    }
   }
 }
 
@@ -1061,7 +1079,9 @@ input[type="range"] {
 .popup,
 #select_chat_popup,
 .popup .popper-modal {
-  @extend %newmorph-dialog-md;
+  &:not(:has(#loader)) {
+    @extend %newmorph-dialog-md;
+  }
 }
 
 .prompt_order > div,
