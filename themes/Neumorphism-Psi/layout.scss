@@ -3,11 +3,10 @@ $top-settings-padding: 0.625rem !default;
 $mobile-threshold: 1000px !default;
 $panel-width: calc(100vw - var(--sheldWidth)) !default;
 
-$sheld-left-offset: calc($top-settings-width - 2px);
+$sheld-left-offset: calc($top-settings-width);
 $sheld-width: calc(
   100vw -
-    $top-settings-width - var(--preset-panel-width) - var(--chara-panel-width) +
-    2px
+    $top-settings-width - var(--preset-panel-width) - var(--chara-panel-width)
 );
 
 @media screen and (min-width: $mobile-threshold) {
@@ -54,7 +53,7 @@ $sheld-width: calc(
       height: 100dvh;
       flex-direction: column;
       justify-content: flex-start;
-      width: $top-settings-width;
+      max-width: $top-settings-width;
       gap: $top-settings-padding;
       padding: $top-settings-padding;
     }

@@ -83,6 +83,12 @@ body {
     -1px -1px 3px $glow-color;
 }
 
+%newmorph-outset-xs-important {
+  box-shadow:
+    1px 1px 1px 1px $shadow-color-75,
+    -1px -1px 1px 0px $glow-color !important;
+}
+
 %newmorph-inset-md {
   box-shadow:
     inset 2px 2px 6px $shadow-color-75,
@@ -203,17 +209,17 @@ pre code.hljs {
   background-color: $bg-color;
   @extend %interactable-wrapper;
   @media screen and (max-width: $mobile-threshold) {
-    background: linear-gradient(
-      145deg,
-      $glow-color,
-      transparent 25%,
-      transparent 85%,
-      $shadow-color-75
-    );
+    // background: linear-gradient(
+    //   145deg,
+    //   $glow-color,
+    //   transparent 25%,
+    //   transparent 85%,
+    //   $shadow-color-75
+    // );
     outline: none;
-    box-shadow:
-      2px 2px 6px $shadow-color-75,
-      -2px -2px 6px $glow-color;
+    // box-shadow:
+    //   2px 2px 6px $shadow-color-75,
+    //   -2px -2px 6px $glow-color;
   }
 }
 .drawer {
@@ -259,6 +265,10 @@ pre code.hljs {
     // }
     @extend %newmorph-outset-md;
   }
+
+  // .drawer-content {
+  //   padding: 0;
+  // }
 
   .info-block {
     @extend %bg-none;
@@ -389,6 +399,7 @@ hr {
     $glow-color 51%,
     transparent 100%
   );
+  opacity: 0.5 !important;
   height: 1em;
 }
 
@@ -526,25 +537,72 @@ div .expression-holder,
   }
 }
 
-input[type="search"] {
-  @extend %newmorph-inset-sm;
-  background-color: $bg-color;
-}
+input {
+  $checkbox-color: color-mix(
+    in srgb,
+    var(--SmartThemeBodyColor),
+    transparent 20%
+  );
+  &[type="search"] {
+    @extend %newmorph-inset-sm;
+    background-color: $bg-color;
+  }
 
-input[type="checkbox"] {
-  &::before {
-    box-shadow: inset 1em 1em
-      color-mix(in srgb, var(--SmartThemeBodyColor), transparent 20%); //$highlight-color;
+  &[type="checkbox"] {
+    &::before {
+      box-shadow: inset 1em 1em $checkbox-color; //$highlight-color;
+    }
+    &:not(:disabled) {
+      @extend %newmorph-outset-xs-important;
+    }
+    &:disabled {
+      box-shadow: none !important;
+      border: none;
+      outline: none;
+    }
+    @extend %bg-none;
   }
-  &:not(:disabled) {
-    @extend %newmorph-outset-sm;
+
+  &[type="radio"] {
+    display: none;
+    & + span {
+      display: inline-block;
+      position: relative;
+      padding-left: 1.5rem;
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border-radius: 50%;
+        // margin-right: 5px;
+        width: 1rem;
+        height: 1rem;
+        border: none;
+        background: $bg-color;
+        @extend %newmorph-outset-xs-important;
+      }
+      &:after {
+        content: "";
+        display: block;
+        width: 0.7rem;
+        height: 0.7rem;
+        background: $checkbox-color;
+        position: absolute;
+        border-radius: 50%;
+        top: 0.15rem;
+        left: 0.15rem;
+        opacity: 0;
+        transform: scale(0, 0);
+        transition: all 0.2s cubic-bezier(0.64, 0.57, 0.67, 1.53);
+      }
+    }
+    &:checked + span:after {
+      opacity: 1;
+      transform: scale(1, 1);
+    }
   }
-  &:disabled {
-    box-shadow: none !important;
-    border: none;
-    outline: none;
-  }
-  @extend %bg-none;
 }
 
 .select2-container {
@@ -586,6 +644,12 @@ input[type="checkbox"] {
           @extend %bg-none;
           @extend %newmorph-inset-sm;
         }
+      }
+
+      .item.regex_item {
+        @extend %newmorph-inset-md;
+        @extend %rounded-sm;
+        background-color: $shadow-color-75;
       }
     }
   }
@@ -653,8 +717,58 @@ input[type="range"] {
     }
   }
 
+  &,
+  .world_entry {
+    .inline-drawer-icon.interactable:not(.up, .fa-circle-chevron-up) {
+      @extend %newmorph-outset-sm;
+    }
+  }
+
   &:hover {
     filter: none;
+  }
+}
+
+#wi-holder {
+  #WIMultiSelector + div {
+    width: 100%;
+  }
+}
+
+.world_entry {
+  @media screen and (min-width: $mobile-threshold) {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  margin-bottom: 5px;
+  @extend %rounded-md;
+
+  &:not(.disabledWIEntry) {
+    @extend %newmorph-outset-md;
+
+    .menu_button:not(.disabled):not([disabled]) {
+      @extend %newmorph-outset-sm;
+      &:hover {
+        @extend %newmorph-inset-sm;
+      }
+    }
+  }
+
+  &.disabledWIEntry {
+    opacity: 1;
+    filter: none;
+  }
+  textarea.text_pole {
+    @extend %newmorph-inset-md;
+  }
+
+  textarea.text_pole[name="comment"] {
+    box-shadow: none;
+
+    &:active,
+    &:focus {
+      @extend %newmorph-inset-md;
+    }
   }
 }
 
@@ -662,6 +776,25 @@ input[type="range"] {
 #extensions_settings2 .inline-drawer-toggle.inline-drawer-header:hover,
 .standoutHeader.inline-drawer-header:hover {
   @extend %newmorph-inset-bg-fixed;
+}
+
+.inline-drawer-icon.interactable {
+  @extend %newmorph-outset-md;
+  filter: none;
+  &.up,
+  &.fa-circle-chevron-up {
+    @extend %newmorph-inset-md;
+    &::before {
+      filter: brightness(50);
+      @extend %bg-chevron-up;
+    }
+  }
+  &.down,
+  &.fa-circle-chevron-down {
+    &::before {
+      @extend %bg-chevron-down;
+    }
+  }
 }
 
 .menu_button:not(.disabled):not([disabled]) {
@@ -994,9 +1127,27 @@ input[type="range"] {
   }
 }
 
-#left-nav-panel,
-#right-nav-panel {
-  border-radius: 0;
-  //box-shadow: none;
-  box-shadow: 3px 0px 3px color-mix(in srgb, $shadow-color, transparent 85%);
+@media screen and (min-width: $mobile-threshold) {
+  #left-nav-panel,
+  #right-nav-panel {
+    border-radius: 0;
+    //box-shadow: none;
+    box-shadow: 3px 0px 3px color-mix(in srgb, $shadow-color, transparent 85%);
+  }
+}
+
+@media screen and (max-width: $mobile-threshold) {
+  #sheld {
+    top: calc(var(--topBarBlockSize) - 1px);
+    height: calc(100vh - var(--topBarBlockSize) + 1px);
+    height: calc(100dvh - var(--topBarBlockSize) + 1px);
+    max-height: calc(100dvh - var(--topBarBlockSize) + 1px);
+    #chat {
+      border: none;
+    }
+
+    #form_sheld {
+      margin: 0;
+    }
+  }
 }
