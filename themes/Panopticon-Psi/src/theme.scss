@@ -406,11 +406,112 @@ textarea,
   @extend %rounded-md;
   @extend %newmorph-inset-md;
   outline: solid 5px $bg-color;
+
+  .mes.selected {
+    // @extend %newmorph-inset-md;
+    // background-color: $shadow-color-75;
+    @extend %newmorph-outset-md;
+    @extend %bg-none;
+  }
 }
+
+select option {
+  background-color: color-mix(in srgb, $bg-color, var(--SmartThemeQuoteColor));
+  color: var(--SmartThemeBodyColor);
+  &:not(:checked) {
+    background-color: $bg-color;
+    color: var(--SmartThemeBodyColor);
+  }
+}
+
 #extensionTopBar,
 #extensionConnectionProfiles {
   border-radius: 0 !important;
   @extend %interactable-wrapper;
+}
+
+#extensionTopBar {
+  @media screen and (max-width: $mobile-threshold) {
+    align-content: normal !important;
+  }
+}
+
+@media screen and (max-width: $mobile-threshold) {
+  .mesAvatarWrapper {
+    position: absolute !important;
+    pointer-events: none;
+    padding-left: 0.5rem;
+    padding-top: 0.2rem;
+    width: calc(100vw - 2rem);
+  }
+
+  .avatar {
+    pointer-events: all;
+  }
+
+  .ch_name {
+    padding-left: 4.5rem;
+    padding-bottom: calc(
+      var(--avatar-base-height) * var(--big-avatar-height-factor)
+    );
+  }
+
+  .mes_buttons {
+    margin: 0;
+    margin-right: 0.5rem;
+    position: absolute;
+    right: 0;
+    top: 2rem;
+    max-width: calc(
+      100% -
+        2.5rem - calc(var(--avatar-base-width) * var(--big-avatar-width-factor))
+    );
+  }
+
+  /*@Gruvbox 移动端布局*/
+  #chat .mes .mesIDDisplay,
+  #chat .mes .mes_timer,
+  #chat .mes .tokenCounterDisplay {
+    position: static !important;
+    display: block !important;
+    order: 2 !important;
+    /* 顶距加大：日期行与计数器不再黏在一起 */
+    margin: 0;
+    padding: 2px 8px !important;
+    font-size: calc(var(--mainFontSize) * 0.72) !important;
+    font-weight: 500 !important;
+    opacity: 1;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    max-width: none !important;
+    overflow: visible !important;
+    border-radius: 0 !important;
+    pointer-events: auto !important;
+    box-sizing: border-box !important;
+    float: right;
+  }
+  // #chat .mes .mesIDDisplay {
+  //   margin-left: calc(100vw - 9.5rem) !important;
+  //   border-radius: 4px 0 0 4px !important;
+  // }
+  .mes_text {
+    padding: 0;
+    padding-bottom: 2rem;
+  }
+
+  body.bubblechat .mes {
+    padding-left: 0.275rem;
+  }
+}
+
+#dialogue_del_mes,
+#form_sheld {
+  background-color: #{$bg-color} !important;
+  margin-top: 0 !important;
+}
+#dialogue_del_mes {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 #send_form {
@@ -421,6 +522,17 @@ textarea,
     outline: none;
     border: none;
   }
+}
+
+#chat .mes .ch_name .mes_buttons .extraMesButtons {
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+  max-width: none !important;
+}
+
+#chat .mes .ch_name .mes_buttons .mes_button,
+#chat .mes .ch_name .mes_buttons .extraMesButtons > div {
+  flex: 0 0 auto !important;
 }
 
 .mes_buttons,
@@ -1014,6 +1126,12 @@ body.charListGrid #charListGridToggle,
 #world_popup,
 #persona-management-block .persona_management_left_column {
   overflow: visible;
+}
+
+@media screen and (min-width: $mobile-threshold) {
+  .mes_block {
+    overflow: visible;
+  }
 }
 
 .tag.actionable {
