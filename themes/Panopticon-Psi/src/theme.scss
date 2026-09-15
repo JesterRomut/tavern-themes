@@ -276,6 +276,60 @@ pre code.hljs {
   // @extend %outline-nogap;
   background-color: $bg-color;
   @extend %interactable-wrapper;
+
+  .drawer {
+    @extend %newmorph-outset-md;
+    @extend %rounded-md;
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: $mobile-threshold) {
+      box-shadow: none;
+    }
+
+    & .drawer-icon {
+      font-size: 1.6rem;
+      box-sizing: content-box;
+    }
+
+    &:not(:has(.openIcon)) {
+      &:hover {
+        @extend %newmorph-inset-bg-md;
+        @extend %newmorph-outset-md;
+      }
+
+      &:hover .drawer-icon {
+        @extend %opacity-1;
+      }
+    }
+
+    &:has(.openIcon) {
+      @extend %newmorph-inset-md;
+
+      .drawer-icon {
+        filter: brightness(50);
+      }
+    }
+
+    .drawer-content,
+    .info-block {
+      // * {
+      //   @extend %bg-none;
+      // }
+      @extend %newmorph-outset-md;
+    }
+
+    // .drawer-content {
+    //   padding: 0;
+    // }
+
+    .info-block {
+      @extend %bg-none;
+    }
+  }
+
   @media screen and (max-width: $mobile-threshold) {
     // background: linear-gradient(
     //   145deg,
@@ -284,66 +338,14 @@ pre code.hljs {
     //   transparent 85%,
     //   $shadow-color-75
     // );
-    box-shadow: inset 2px 2px 6px $glow-color;
+    box-shadow: inset 2px 2px 6px neumorph.glow();
     outline: none;
     // box-shadow:
     //   2px 2px 6px $shadow-color-75,
     //   -2px -2px 6px $glow-color;
-    .drawer {
+    .drawer:not(:has(.openIcon)) {
       box-shadow: none;
     }
-  }
-}
-.drawer {
-  @extend %newmorph-outset-md;
-  @extend %rounded-md;
-  width: 100%;
-  aspect-ratio: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @media screen and (max-width: $mobile-threshold) {
-    box-shadow: none;
-  }
-
-  & .drawer-icon {
-    font-size: 1.6rem;
-    box-sizing: content-box;
-  }
-
-  &:not(:has(.openIcon)) {
-    &:hover {
-      @extend %newmorph-inset-bg-md;
-      @extend %newmorph-outset-md;
-    }
-
-    &:hover .drawer-icon {
-      @extend %opacity-1;
-    }
-  }
-
-  &:has(.openIcon) {
-    @extend %newmorph-inset-md;
-
-    .drawer-icon {
-      filter: brightness(50);
-    }
-  }
-
-  .drawer-content,
-  .info-block {
-    // * {
-    //   @extend %bg-none;
-    // }
-    @extend %newmorph-outset-md;
-  }
-
-  // .drawer-content {
-  //   padding: 0;
-  // }
-
-  .info-block {
-    @extend %bg-none;
   }
 }
 
@@ -735,16 +737,6 @@ div .expression-holder,
   }
 }
 
-// #leftSendForm,
-// #rightSendForm {
-//   @extend %rounded-md;
-//   @extend %newmorph-outset-md;
-//   @extend %interactable-wrapper;
-//   .interactable:hover {
-//     @extend %newmorph-inset-md;
-//   }
-// }
-
 #qr--bar,
 #extensionsMenu > .extension_container > div,
 #extensionsMenu > div:not(.extension_container),
@@ -1101,22 +1093,6 @@ body.charListGrid #charListGridToggle,
 #PersonaManagement:has(#user_avatar_block.gridView) #persona_grid_toggle {
   @extend %menu-button-lit;
 }
-// #world_button.world_set,
-// #persona_lore_button.world_set,
-// #favorite_button.fav_on,
-// .chat_lorebook_button.world_set {
-//   &:not(.disabled):not([disabled]) {
-//     @extend %newmorph-inset-md;
-//     &::before {
-//       filter: brightness(50);
-//     }
-
-//     &:hover {
-//       @extend %newmorph-outset-md;
-//       @extend %newmorph-inset-bg-md;
-//     }
-//   }
-// }
 
 #persona_connections_buttons {
   .menu_button {
@@ -1380,7 +1356,7 @@ body.charListGrid #charListGridToggle,
   color: $bg-color;
   text-shadow:
     1px 1px 3px $shadow-color-75,
-    -1px -1px 3px $glow-color;
+    -1px -1px 3px neumorph.glow();
 }
 
 /*@Gruvbox*/
