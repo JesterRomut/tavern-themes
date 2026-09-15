@@ -1,6 +1,8 @@
 @use "../theme.scss" with (
   $icon-color: "%23666666",
   $danger-color: #a34c53,
-  $icon-offline: "%23a34c53"
+  $icon-offline: "%23a34c53",
+  $glow-intensity: 90%,
+  $shadow-intensity: 25%
 );
 @use "../layout.scss";

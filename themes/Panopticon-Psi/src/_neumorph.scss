@@ -1,0 +1,41 @@
+$shadow-color: #000 !default;
+$glow-color: #ffffff !default;
+$glow-intensity: 50% !default;
+$shadow-intensity: 50% !default;
+
+@function shadow() {
+  @return color-mix($shadow-color $shadow-intensity, transparent);
+}
+
+@function glow() {
+  @return color-mix($glow-color $glow-intensity, transparent);
+}
+
+@mixin outset($size, $blur, $important: null) {
+  // @if $important == true {
+  box-shadow:
+    $size $size $blur shadow(),
+    (-$size) (-$size) $blur glow() $important;
+  // } @else {
+  //   box-shadow:
+  //     $size $size $blur $shadow, // } //     (-$size) (-$size) $blur $glow;
+}
+
+@mixin outset-md($important: null) {
+  @include outset(2px, 6px, $important: null);
+}
+@mixin outset-sm($important: null) {
+  @include outset(1px, 3px, $important: null);
+}
+
+@mixin dialog($size, $blur, $important: null) {
+  box-shadow:
+    $size $size $blur shadow(),
+    inset $size $size $blur glow() $important;
+}
+
+@mixin inset($size, $blur, $important: null) {
+  box-shadow:
+    inset $size $size $blur shadow(),
+    inset (-$size) (-$size) $blur glow() $important;
+}

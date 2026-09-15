@@ -1,9 +1,10 @@
 @use "../theme.scss" with (
   //#e0e0e0
-  $shadow-color-75: #000000,
-  $glow-color: #ffffff28,
+  // $glow-color: #ffffff28,
   $danger-color: #822830,
   $icon-color: "%23aaaaaa",
-  $icon-offline: "%23822830"
+  $icon-offline: "%23822830",
+  $glow-intensity: 20%,
+  $shadow-intensity: 90%
 );
 @use "../layout.scss";

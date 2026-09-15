@@ -6,25 +6,33 @@
 禁止商业化或倒卖
 */
 
-$bg-color: color(
-  from var(--SmartThemeChatTintColor) srgb r g b / 1
-) !default; //#e0e0e0
+$bg-color: color(from var(--SmartThemeChatTintColor) srgb r g b / 1) !default;
 $shadow-color: #000 !default;
-$shadow-color-75: color-mix(in srgb, #000, transparent 75%) !default;
 $glow-color: #ffffff !default;
+$glow-intensity: 50% !default;
+$shadow-intensity: 50% !default;
+
 $danger-color: #bf2734 !default;
 $mobile-threshold: 1000px !default;
 $icon-color: "%233c3836" !default;
 $icon-offline: "%23bf2734" !default;
-$bg-color: "transparent" !default;
 
 @use "icons-fa.scss" with (
   $icon-color: $icon-color,
   $icon-offline: $icon-offline
 );
 
+@use "neumorph.scss" with (
+  $glow-color: $glow-color,
+  $shadow-color: $shadow-color,
+  $glow-intensity: $glow-intensity,
+  $shadow-intensity: $shadow-intensity
+);
+
+$shadow-color-75: neumorph.shadow();
+
 $highlight-color: color(
-  from color-mix(in srgb, $glow-color, $bg-color 50%) srgb r g b / 1
+  from color-mix(in srgb, neumorph.glow(), $bg-color 50%) srgb r g b / 1
 ); //color-mix(in srgb, #fff, $bg-color 50%);
 
 @import url("https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.0/index.css");
@@ -53,48 +61,46 @@ body {
     scrollbar-color: $highlight-color $shadow-color-75;
   }
 }
-@supports selector(::-webkit-scrollbar) {
-  %rounded-scrollbar {
-    @extend %rounded-md;
-  }
-  body {
-    ::-webkit-scrollbar {
-      width: 0.5rem;
-      @media screen and (max-width: $mobile-threshold) {
-        width: 0.3rem;
-      }
-      overflow: visible;
-      @extend %rounded-scrollbar;
+
+%rounded-scrollbar {
+  @extend %rounded-md;
+}
+:root {
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+    @media screen and (max-width: $mobile-threshold) {
+      width: 0.3rem;
     }
-    ::-webkit-scrollbar-track {
-      @extend %rounded-scrollbar;
-      @extend %bg-none;
-      border-radius: 2px;
-      overflow: visible;
+    overflow: visible;
+    @extend %rounded-scrollbar;
+  }
+  ::-webkit-scrollbar-track {
+    @extend %rounded-scrollbar;
+    @extend %bg-none;
+    overflow: visible;
+    background: linear-gradient(
+      to right,
+      color-mix(in srgb, $shadow-color-75, transparent),
+      transparent
+    ) !important;
+    &:hover {
       background: linear-gradient(
         to right,
-        color-mix(in srgb, $shadow-color-75, transparent),
+        $shadow-color-75,
         transparent
       ) !important;
-      &:hover {
-        background: linear-gradient(
-          to right,
-          $shadow-color-75,
-          transparent
-        ) !important;
-      }
     }
-    ::-webkit-scrollbar-thumb {
-      background: color-mix(in srgb, $glow-color, $bg-color 50%) !important;
-      border: none !important;
-      outline: none !important;
-      @extend %newmorph-outset-md-important;
-      overflow: visible;
-      @extend %rounded-scrollbar;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      @extend %newmorph-inset-sm;
-    }
+  }
+  ::-webkit-scrollbar-thumb {
+    background: $highlight-color !important;
+    border: none !important;
+    outline: none !important;
+    @include neumorph.outset-md(!important);
+    overflow: visible;
+    @extend %rounded-scrollbar;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @extend %newmorph-inset-sm;
   }
 }
 
@@ -107,75 +113,78 @@ body {
 }
 
 %newmorph-outset-md {
-  box-shadow:
-    2px 2px 6px $shadow-color-75,
-    -2px -2px 6px $glow-color;
-}
-
-%newmorph-outset-md-important {
-  box-shadow:
-    2px 2px 6px $shadow-color-75,
-    -2px -2px 6px $glow-color !important;
+  // box-shadow:
+  //   2px 2px 6px $shadow-color-75,
+  //   -2px -2px 6px $glow-color;
+  @include neumorph.outset-md();
 }
 
 %newmorph-outset-sm {
-  box-shadow:
-    1px 1px 3px $shadow-color-75,
-    -1px -1px 3px $glow-color;
+  @include neumorph.outset-sm();
 }
 
 %newmorph-outset-xs-important {
   box-shadow:
-    1px 1px 1px 1px $shadow-color-75,
-    -1px -1px 1px 0px $glow-color !important;
+    1px 1px 1px 1px neumorph.shadow(),
+    -1px -1px 1px 0px neumorph.glow() !important;
 }
 
 %newmorph-dialog-md {
-  box-shadow:
-    2px 2px 6px $shadow-color-75,
-    inset 2px 2px 6px $glow-color;
+  @include neumorph.dialog(2px, 6px);
 }
 
 %newmorph-dialog-md-important {
-  box-shadow:
-    2px 2px 6px $shadow-color-75,
-    inset 2px 2px 6px $glow-color !important;
+  @include neumorph.dialog(2px, 6px, !important);
 }
 
 %newmorph-inset-md {
-  box-shadow:
-    inset 2px 2px 6px $shadow-color-75,
-    inset -2px -2px 6px $glow-color;
+  @include neumorph.inset(2px, 6px);
 }
 
 %newmorph-inset-md-important {
-  box-shadow:
-    inset 2px 2px 6px $shadow-color-75,
-    inset -2px -2px 6px $glow-color !important;
+  @include neumorph.inset(2px, 6px, !important);
 }
 
 %newmorph-inset-sm {
-  box-shadow:
-    inset 1px 1px 3px $shadow-color-75,
-    inset -1px -1px 3px $glow-color;
+  @include neumorph.inset(1px, 3px);
 }
 
 %newmorph-inset-bg-md {
   background: linear-gradient(
     145deg,
-    color-mix(in srgb, $shadow-color, transparent 79%),
-    color-mix(in srgb, $glow-color, transparent)
+    color-mix(
+      in srgb,
+      $shadow-color calc($shadow-intensity * 0.8),
+      transparent
+    ),
+    color-mix(in srgb, $glow-color calc($glow-intensity * 0.8), transparent)
   ); //#cacaca, #f0f0f0
 }
 
 %newmorph-inset-bg-fixed {
   background: linear-gradient(
     145deg,
-    color-mix(in srgb, $shadow-color, transparent 79%),
+    color-mix(
+      in srgb,
+      $shadow-color calc($shadow-intensity * 0.6),
+      transparent
+    ),
     transparent 100px,
     transparent 100px,
-    color-mix(in srgb, $glow-color, transparent)
+    color-mix(in srgb, $glow-color calc($glow-intensity * 0.6), transparent)
   ); //#cacaca, #f0f0f0
+}
+
+%newmorph-inset-bg-opaque {
+  background: linear-gradient(
+    145deg,
+    color-mix(
+      in srgb,
+      $shadow-color calc($shadow-intensity * 0.8),
+      $bg-color 79%
+    ),
+    color-mix(in srgb, $glow-color calc($glow-intensity * 0.8), $bg-color)
+  );
 }
 
 // %newmorph-inset-bg-fixed-important {
@@ -613,8 +622,8 @@ hr {
   background: linear-gradient(
     180deg,
     transparent 0%,
-    $shadow-color-75 50%,
-    $glow-color 51%,
+    neumorph.shadow() 50%,
+    neumorph.glow() 51%,
     transparent 100%
   );
   opacity: 0.5 !important;
@@ -642,11 +651,7 @@ body.big-avatars .avatar img {
   &:hover,
   &:active {
     @extend %newmorph-outset-md;
-    background: linear-gradient(
-      145deg,
-      color-mix(in srgb, $shadow-color, $bg-color 79%),
-      color-mix(in srgb, $glow-color, $bg-color)
-    );
+    @extend %newmorph-inset-bg-opaque;
   }
 }
 
@@ -913,7 +918,7 @@ input[type="range"] {
     // background: $highlight-color !important;
     background: linear-gradient(
       145deg,
-      color-mix(in srgb, color(from #{$glow-color} srgb r g b / 1), $bg-color),
+      color-mix(in srgb, $glow-color, $bg-color),
       color-mix(in srgb, $shadow-color, $bg-color 79%)
     ) !important;
     border: 1px solid $highlight-color !important;
@@ -1440,7 +1445,12 @@ body.charListGrid #charListGridToggle,
   #right-nav-panel {
     border-radius: 0;
     //box-shadow: none;
-    box-shadow: 3px 0px 3px color-mix(in srgb, $shadow-color, transparent 85%);
+    box-shadow: 3px 0px 3px
+      color-mix(
+        in srgb,
+        $shadow-color calc($shadow-intensity * 0.5),
+        transparent
+      );
   }
 }
 
