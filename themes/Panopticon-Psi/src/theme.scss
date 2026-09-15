@@ -22,7 +22,7 @@ $icon-offline: "%23bf2734" !default;
   $icon-offline: $icon-offline
 );
 
-@use "neumorph.scss" with (
+@use "neumorph.scss" as neumorph with (
   $glow-color: $glow-color,
   $shadow-color: $shadow-color,
   $glow-intensity: $glow-intensity,
@@ -129,6 +129,12 @@ body {
     -1px -1px 1px 0px neumorph.glow() !important;
 }
 
+%newmorph-inset-xs-important {
+  box-shadow:
+    inset 1px 1px 1px 1px neumorph.shadow(),
+    inset -1px -1px 1px 0px neumorph.glow() !important;
+}
+
 %newmorph-dialog-md {
   @include neumorph.dialog(2px, 6px);
 }
@@ -227,12 +233,6 @@ body {
   background-color: transparent !important;
   background: none !important;
 }
-
-$checkbox-color: color-mix(
-  in srgb,
-  var(--SmartThemeBodyColor),
-  transparent 20%
-);
 
 input,
 textarea,
@@ -453,7 +453,7 @@ select option {
     .mesAvatarWrapper {
       position: absolute !important;
       pointer-events: none;
-      padding-left: 0.5rem;
+      padding-left: 0;
       padding-top: 0.2rem;
       width: calc(100vw - 2rem);
     }
@@ -510,12 +510,16 @@ select option {
     // }
     .mes_text {
       padding: 0;
-      padding-bottom: 2rem;
+      padding-bottom: 1rem;
+    }
+    .mes_block {
+      padding: 0;
+      padding-bottom: 4rem;
     }
   }
 
   body.bubblechat .mes {
-    padding-left: 0.275rem;
+    padding-left: 1.2rem;
   }
 }
 
@@ -780,17 +784,31 @@ div .expression-holder,
 }
 
 input {
+  $checkbox-color: color-mix(neumorph.shadow(), transparent);
+  $checkbox-color-checked: color-mix(
+    in srgb,
+    var(--SmartThemeBodyColor) 80%,
+    transparent
+  );
   &[type="search"] {
     @extend %newmorph-inset-sm;
     background-color: $bg-color;
   }
 
   &[type="checkbox"] {
+    border: none !important;
     &::before {
+      transform: scale(1);
       box-shadow: inset 1em 1em $checkbox-color; //$highlight-color;
     }
-    &:not(:disabled) {
+    &:not(:checked) {
       @extend %newmorph-outset-xs-important;
+    }
+    &:checked {
+      @extend %newmorph-inset-xs-important;
+      &::before {
+        box-shadow: inset 1em 1em $checkbox-color-checked;
+      }
     }
     &:disabled {
       box-shadow: none !important;
@@ -823,22 +841,29 @@ input {
       &:after {
         content: "";
         display: block;
-        width: 0.7rem;
-        height: 0.7rem;
+        width: 0.6rem;
+        height: 0.6rem;
         background: $checkbox-color;
         position: absolute;
         border-radius: 50%;
-        top: 0.15rem;
-        left: 0.15rem;
-        opacity: 0;
-        transform: scale(0, 0);
-        transition: all 0.2s cubic-bezier(0.64, 0.57, 0.67, 1.53);
+        top: 0.2rem;
+        left: 0.2rem;
+        // transform: scale(0, 0);
+        // transition: all 0.2s cubic-bezier(0.64, 0.57, 0.67, 1.53);
       }
     }
-    &:checked + span:after {
-      @extend %opacity-1;
-      transform: scale(1, 1);
+    &:checked + span {
+      &::before {
+        @extend %newmorph-inset-xs-important;
+      }
+      &:after {
+        background: $checkbox-color-checked;
+      }
     }
+    // &:checked + span:after {
+    //   @extend %opacity-1;
+    //   transform: scale(1, 1);
+    // }
   }
 }
 
