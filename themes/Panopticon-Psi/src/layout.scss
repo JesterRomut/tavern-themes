@@ -76,7 +76,11 @@ $sheld-width: calc(
     .zoomed_avatar {
       z-index: 114;
       // bottom: var(--formSheldHeight);
-      left: $top-settings-width;
+      // left: $top-settings-width;
+      right: calc(
+        var(--chara-panel-width) + var(--preset-panel-width) + 40px + 0.5rem
+      ); //加40px和0.5rem防止挡住swipeRight
+      left: unset;
       bottom: var(--bottomFormBlockSize);
       // pointer-events: none;
       // &:hover {

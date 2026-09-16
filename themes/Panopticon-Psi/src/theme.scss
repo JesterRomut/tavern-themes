@@ -253,7 +253,8 @@ button:not(.fa-solid):not(.fa-regular):not([class*="fa-"]),
 .ch_name,
 .mesIDDisplay,
 .mes_timer,
-.tokenCounterDisplay {
+.tokenCounterDisplay,
+.ui-widget {
   font-family: var(--font-sans);
 }
 
@@ -369,6 +370,29 @@ textarea,
   font-weight: 500;
   background: linear-gradient(transparent, $bg-color 80%);
 }
+
+#bg_tabs {
+  @extend %newmorph-outset-md;
+  .bg_tabs_list {
+    padding-left: 5px;
+
+    .bg_tab_button {
+      @extend %rounded-md;
+      border: none;
+    }
+  }
+  .bg_tabs_list .bg_tab_button.ui-tabs-active {
+    @extend %newmorph-inset-md;
+  }
+  #bg_global_tab {
+    box-shadow: none;
+
+    .bg_example {
+      @extend %newmorph-outset-sm;
+    }
+  }
+}
+
 .bg_folder_tile {
   @extend %bg-none;
   @extend %newmorph-outset-md;
@@ -636,6 +660,7 @@ hr {
   height: 1em;
 }
 
+body .avatar img,
 body.big-avatars .avatar img {
   @extend %newmorph-outset-md;
   border: none;
@@ -666,6 +691,15 @@ div .expression-holder,
   .dragClose {
     height: unset;
     @extend %img-control;
+  }
+}
+.zoomed_avatar {
+  aspect-ratio: var(--big-avatar-width-factor) / var(--big-avatar-height-factor);
+
+  @media screen and (max-width: $mobile-threshold) {
+    .panelControlBar {
+      opacity: 1;
+    }
   }
 }
 .dragClose {
@@ -1259,20 +1293,6 @@ body.charListGrid #charListGridToggle,
 .thumbnail-clipper {
   background-size: cover !important;
   background-position: center !important;
-}
-
-#bg_tabs {
-  @extend %newmorph-outset-md;
-  .bg_tabs_list .bg_tab_button.ui-tabs-active {
-    @extend %newmorph-inset-sm;
-  }
-  #bg_global_tab {
-    box-shadow: none;
-
-    .bg_example {
-      @extend %newmorph-outset-sm;
-    }
-  }
 }
 
 .paginationjs-pages {
