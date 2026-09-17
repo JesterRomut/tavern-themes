@@ -6,3 +6,21 @@
   $shadow-intensity: 25%
 );
 @use "../layout.scss";
+
+//小白X区完了，这么久了居然还在用写死的颜色，不打!important还覆盖不上去，当社区完全没亮色主题呢区区区区区
+.littlewhitebox input[type="checkbox"]:checked + label,
+.littlewhitebox input[type="checkbox"] + label,
+.littlewhitebox .menu-tab,
+.littlewhitebox .template-replacer-title {
+  color: var(--SmartThemeBodyColor) !important;
+}
+.littlewhitebox .menu-tab.active {
+  color: var(--SmartThemeQuoteColor) !important;
+  border-left: 2px solid var(--SmartThemeQuoteColor) !important;
+}
+.littlewhitebox input[type="checkbox"] {
+  @extend %bg-none-important;
+}
+.littlewhitebox .task-tab.active {
+  border-bottom-color: var(--SmartThemeQuoteColor) !important;
+}
