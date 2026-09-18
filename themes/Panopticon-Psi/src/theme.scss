@@ -474,6 +474,18 @@ select option {
   }
 }
 
+#chat .mes {
+  @media screen and (min-width: $mobile-threshold) {
+    .mes_text {
+      padding-right: 0;
+    }
+    padding-right: var(--mes-right-spacing);
+  }
+  &.last_mes {
+    padding-bottom: 2rem;
+  }
+}
+
 @media screen and (max-width: $mobile-threshold) {
   #chat .mes {
     .mesAvatarWrapper {
@@ -569,15 +581,19 @@ select option {
   }
 }
 
-#chat .mes .ch_name .mes_buttons .extraMesButtons {
-  flex-wrap: wrap !important;
-  overflow: visible !important;
-  max-width: none !important;
-}
-
-#chat .mes .ch_name .mes_buttons .mes_button,
-#chat .mes .ch_name .mes_buttons .extraMesButtons > div {
-  flex: 0 0 auto !important;
+#chat .mes .ch_name .mes_buttons {
+  @media screen and (min-width: $mobile-threshold) {
+    margin: 0;
+  }
+  .extraMesButtons {
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+    max-width: none !important;
+  }
+  .mes_button,
+  .extraMesButtons > div {
+    flex: 0 0 auto !important;
+  }
 }
 
 .mes_buttons,
