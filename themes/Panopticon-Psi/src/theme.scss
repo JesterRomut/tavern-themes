@@ -585,11 +585,11 @@ select option {
   @media screen and (min-width: $mobile-threshold) {
     margin: 0;
   }
-  .extraMesButtons {
-    flex-wrap: wrap !important;
-    overflow: visible !important;
-    max-width: none !important;
-  }
+  // .extraMesButtons {
+  //   flex-wrap: wrap !important;
+  //   overflow: visible !important;
+  //   max-width: none !important;
+  // }
   .mes_button,
   .extraMesButtons > div {
     flex: 0 0 auto !important;
@@ -1478,16 +1478,18 @@ body.charListGrid #charListGridToggle,
 }
 
 @media screen and (min-width: $mobile-threshold) {
-  #left-nav-panel,
-  #right-nav-panel {
-    border-radius: 0;
-    //box-shadow: none;
-    box-shadow: 3px 0px 3px
-      color-mix(
-        in srgb,
-        $shadow-color calc($shadow-intensity * 0.5),
-        transparent
-      );
+  #top-settings-holder {
+    #left-nav-panel,
+    #right-nav-panel {
+      border-radius: 0;
+      //box-shadow: none;
+      box-shadow: 3px 0px 3px
+        color-mix(
+          in srgb,
+          $shadow-color calc($shadow-intensity * 0.5),
+          transparent
+        );
+    }
   }
 }
 
@@ -1644,4 +1646,9 @@ pre code {
   background: $code-color;
   @extend %rounded-sm;
   border: none;
+}
+
+// 小白x在打开时会把消息按钮栏宽度设成固定的150px，气笑了
+.mes_block .mes_buttons.xiaobaix-expanded {
+  width: unset !important;
 }
