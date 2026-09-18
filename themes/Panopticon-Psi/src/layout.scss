@@ -28,8 +28,8 @@ $sheld-width: calc(
   }
 
   body:not(.waifuMode) {
-    /*重置部分@BDLayout - 疑似已停止维护*/
     #top-bar {
+      /*重置部分@BDLayout - 疑似已停止维护*/
       border-bottom: unset;
       margin: unset;
       width: unset;

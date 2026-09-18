@@ -520,10 +520,10 @@ select option {
           )
       );
     }
-    /*@Gruvbox 移动端布局*/
     .mesIDDisplay,
     .mes_timer,
     .tokenCounterDisplay {
+      /*@Gruvbox 移动端布局*/
       position: static !important;
       display: block !important;
       order: 2 !important;
@@ -825,13 +825,13 @@ div .expression-holder,
   }
 }
 
+$checkbox-color: color-mix(neumorph.shadow(), transparent);
+$checkbox-color-checked: color-mix(
+  in srgb,
+  var(--SmartThemeBodyColor) 80%,
+  transparent
+);
 input {
-  $checkbox-color: color-mix(neumorph.shadow(), transparent);
-  $checkbox-color-checked: color-mix(
-    in srgb,
-    var(--SmartThemeBodyColor) 80%,
-    transparent
-  );
   &[type="search"] {
     @extend %newmorph-inset-sm;
     background-color: $bg-color;
@@ -859,54 +859,49 @@ input {
     }
     @extend %bg-none;
   }
-
-  &[type="radio"] {
-    display: none;
-    & + span {
-      display: inline-block;
-      position: relative;
-      padding-left: 1.5rem;
-      &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        border-radius: 50%;
-        // margin-right: 5px;
-        width: 1rem;
-        height: 1rem;
-        border: none;
-        background: $bg-color;
-        @extend %newmorph-outset-xs-important;
-      }
-      &:after {
-        content: "";
-        display: block;
-        width: 0.6rem;
-        height: 0.6rem;
-        background: $checkbox-color;
-        position: absolute;
-        border-radius: 50%;
-        top: 0.2rem;
-        left: 0.2rem;
-        // transform: scale(0, 0);
-        // transition: all 0.2s cubic-bezier(0.64, 0.57, 0.67, 1.53);
-      }
+}
+%radio {
+  display: none;
+  & + span {
+    display: inline-block;
+    position: relative;
+    padding-left: 1.5rem;
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      border-radius: 50%;
+      width: 1rem;
+      height: 1rem;
+      border: none;
+      background: $bg-color;
+      @extend %newmorph-outset-xs-important;
     }
-    &:checked + span {
-      &::before {
-        @extend %newmorph-inset-xs-important;
-      }
-      &:after {
-        background: $checkbox-color-checked;
-      }
+    &:after {
+      content: "";
+      display: block;
+      width: 0.6rem;
+      height: 0.6rem;
+      background: $checkbox-color;
+      position: absolute;
+      border-radius: 50%;
+      top: 0.2rem;
+      left: 0.2rem;
     }
-    // &:checked + span:after {
-    //   @extend %opacity-1;
-    //   transform: scale(1, 1);
-    // }
   }
+  &:checked + span {
+    &::before {
+      @extend %newmorph-inset-xs-important;
+    }
+    &:after {
+      background: $checkbox-color-checked;
+    }
+  }
+}
+body *:has(> input[type="radio"] + span) input[type="radio"] {
+  @extend %radio;
 }
 
 .select2-container {
